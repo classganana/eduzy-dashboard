@@ -1,14 +1,13 @@
 import { useState } from "react";
 import reactLogo from "../assets/react.svg";
 import viteLogo from "/logo.svg";
-import "../App.css";
 
 function Home() {
   const [count, setCount] = useState(0);
 
   return (
-    <>
-      <div className="flex flex-col items-center">
+    <div className="flex flex-col h-full w-full items-center justify-center">
+      <div className="flex flex-col items-center justify-center">
         <a href="https://vitejs.dev" target="_blank">
           <img src={viteLogo} className="logo" alt="Vite logo" />
         </a>
@@ -28,7 +27,7 @@ function Home() {
       <p className="read-the-docs">
         Click on the Vite and React logos to learn more
       </p>
-    </>
+    </div>
   );
 }
 

@@ -1,8 +1,7 @@
-import "./App.css";
 import { Provider } from "react-redux";
-import applicationStore from "./store";
 import { Outlet } from "react-router-dom";
 import AppLayout from "./layout/AppLayout";
+import applicationStore from "./store";
 
 function App() {
   return (
