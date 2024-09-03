@@ -1,7 +1,5 @@
-import { Button } from "@nextui-org/button";
-
 function Home() {
-  return <Button color="primary">Press me</Button>;
+  return <div color="primary">Press me</div>;
 }
 
 export default Home;

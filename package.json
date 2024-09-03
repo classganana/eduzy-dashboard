@@ -13,10 +13,6 @@
     "prepare": "husky"
   },
   "dependencies": {
-    "@nextui-org/button": "^2.0.34",
-    "@nextui-org/react": "^2.4.2",
-    "@nextui-org/system": "^2.2.2",
-    "@nextui-org/theme": "^2.2.6",
     "@reduxjs/toolkit": "^2.2.5",
     "clsx": "^2.1.1",
     "framer-motion": "^11.2.12",
