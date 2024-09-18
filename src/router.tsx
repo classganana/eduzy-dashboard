@@ -1,8 +1,9 @@
 import { createBrowserRouter } from "react-router-dom";
 
-import Home from "./pages/home";
-import ErrorPage from "./pages/error";
 import App from "./App";
+import Assessments from "./pages/assessments";
+import ErrorPage from "./pages/error";
+import Reports from "./pages/reports";
 
 export const applicationRouter = createBrowserRouter([
   {
@@ -11,8 +12,12 @@ export const applicationRouter = createBrowserRouter([
     errorElement: <ErrorPage description="Page Not found" title="404" />,
     children: [
       {
-        path: "",
-        element: <Home />,
+        path: "/assessments",
+        element: <Assessments />,
+      },
+      {
+        path: "/reports",
+        element: <Reports />,
       },
     ],
   },
