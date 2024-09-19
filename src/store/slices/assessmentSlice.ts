@@ -19,6 +19,8 @@ const assessmentSlice = createSlice({
       }>,
     ) {
       /* Get scheduled or created assessments */
+      console.log(state);
+
       return [
         {
           assessmentId: "1",
