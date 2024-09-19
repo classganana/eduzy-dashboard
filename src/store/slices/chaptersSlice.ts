@@ -18,6 +18,7 @@ const chapterSlice = createSlice({
       }>,
     ) {
       /* Get from some api call and assign */
+      console.log(state);
       // TODO: integrate api
       const chapters = [
         {
