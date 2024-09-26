@@ -8,7 +8,7 @@ const chapterSlice = createSlice({
   name: "chapterSlice",
   initialState: chapters,
   reducers: {
-    initializeChapters(
+    fetchChapters(
       state,
       action: PayloadAction<{
         classId: string;
@@ -22,11 +22,11 @@ const chapterSlice = createSlice({
       // TODO: integrate api
       const chapters = [
         {
-          chapterId: "1",
-          chapterName: "Chapter 1",
+          id: "1",
+          name: "Chapter 1",
           questions: [
             {
-              chapterId: "1",
+              id: "1",
               questionId: "1",
               question: "What is the capital of India?",
               options: [
@@ -46,7 +46,7 @@ const chapterSlice = createSlice({
               answer: "Delhi",
             },
             {
-              chapterId: "1",
+              id: "1",
               questionId: "2",
               question: "What is the capital of France?",
               options: [
@@ -66,17 +66,19 @@ const chapterSlice = createSlice({
               answer: "Paris",
             },
           ],
+          description:
+            "lorem ipsum dolor sit amet cons ectetur adipiscing elit",
           classId: action.payload.classId,
           boardId: action.payload.boardId,
           subjectId: action.payload.subjectId,
           schoolId: action.payload.schoolId,
         },
         {
-          chapterId: "2",
-          chapterName: "Chapter 2",
+          id: "2",
+          name: "Chapter 2",
           questions: [
             {
-              chapterId: "2",
+              id: "2",
               questionId: "1",
               question: "What is the capital of India?",
               options: [
@@ -96,7 +98,7 @@ const chapterSlice = createSlice({
               answer: "Delhi",
             },
             {
-              chapterId: "2",
+              id: "2",
               questionId: "2",
               question: "What is the capital of France?",
               options: [
@@ -116,6 +118,268 @@ const chapterSlice = createSlice({
               answer: "Paris",
             },
           ],
+          description:
+            "lorem ipsum dolor sit amet cons ectetur adipiscing elit",
+          classId: action.payload.classId,
+          boardId: action.payload.boardId,
+          subjectId: action.payload.subjectId,
+          schoolId: action.payload.schoolId,
+        },
+        {
+          id: "2",
+          name: "Chapter 2",
+          questions: [
+            {
+              id: "2",
+              questionId: "1",
+              question: "What is the capital of India?",
+              options: [
+                {
+                  option: "Delhi",
+                },
+                {
+                  option: "Mumbai",
+                },
+                {
+                  option: "Chennai",
+                },
+                {
+                  option: "Kolkata",
+                },
+              ],
+              answer: "Delhi",
+            },
+            {
+              id: "2",
+              questionId: "2",
+              question: "What is the capital of France?",
+              options: [
+                {
+                  option: "Paris",
+                },
+                {
+                  option: "London",
+                },
+                {
+                  option: "Berlin",
+                },
+                {
+                  option: "Rome",
+                },
+              ],
+              answer: "Paris",
+            },
+          ],
+          description:
+            "lorem ipsum dolor sit amet cons ectetur adipiscing elit",
+          classId: action.payload.classId,
+          boardId: action.payload.boardId,
+          subjectId: action.payload.subjectId,
+          schoolId: action.payload.schoolId,
+        },
+        {
+          id: "2",
+          name: "Chapter 2",
+          questions: [
+            {
+              id: "2",
+              questionId: "1",
+              question: "What is the capital of India?",
+              options: [
+                {
+                  option: "Delhi",
+                },
+                {
+                  option: "Mumbai",
+                },
+                {
+                  option: "Chennai",
+                },
+                {
+                  option: "Kolkata",
+                },
+              ],
+              answer: "Delhi",
+            },
+            {
+              id: "2",
+              questionId: "2",
+              question: "What is the capital of France?",
+              options: [
+                {
+                  option: "Paris",
+                },
+                {
+                  option: "London",
+                },
+                {
+                  option: "Berlin",
+                },
+                {
+                  option: "Rome",
+                },
+              ],
+              answer: "Paris",
+            },
+          ],
+          description:
+            "lorem ipsum dolor sit amet cons ectetur adipiscing elit",
+          classId: action.payload.classId,
+          boardId: action.payload.boardId,
+          subjectId: action.payload.subjectId,
+          schoolId: action.payload.schoolId,
+        },
+        {
+          id: "2",
+          name: "Chapter 2",
+          questions: [
+            {
+              id: "2",
+              questionId: "1",
+              question: "What is the capital of India?",
+              options: [
+                {
+                  option: "Delhi",
+                },
+                {
+                  option: "Mumbai",
+                },
+                {
+                  option: "Chennai",
+                },
+                {
+                  option: "Kolkata",
+                },
+              ],
+              answer: "Delhi",
+            },
+            {
+              id: "2",
+              questionId: "2",
+              question: "What is the capital of France?",
+              options: [
+                {
+                  option: "Paris",
+                },
+                {
+                  option: "London",
+                },
+                {
+                  option: "Berlin",
+                },
+                {
+                  option: "Rome",
+                },
+              ],
+              answer: "Paris",
+            },
+          ],
+          description:
+            "lorem ipsum dolor sit amet cons ectetur adipiscing elit",
+          classId: action.payload.classId,
+          boardId: action.payload.boardId,
+          subjectId: action.payload.subjectId,
+          schoolId: action.payload.schoolId,
+        },
+        {
+          id: "2",
+          name: "Chapter 2",
+          questions: [
+            {
+              id: "2",
+              questionId: "1",
+              question: "What is the capital of India?",
+              options: [
+                {
+                  option: "Delhi",
+                },
+                {
+                  option: "Mumbai",
+                },
+                {
+                  option: "Chennai",
+                },
+                {
+                  option: "Kolkata",
+                },
+              ],
+              answer: "Delhi",
+            },
+            {
+              id: "2",
+              questionId: "2",
+              question: "What is the capital of France?",
+              options: [
+                {
+                  option: "Paris",
+                },
+                {
+                  option: "London",
+                },
+                {
+                  option: "Berlin",
+                },
+                {
+                  option: "Rome",
+                },
+              ],
+              answer: "Paris",
+            },
+          ],
+          description:
+            "lorem ipsum dolor sit amet cons ectetur adipiscing elit",
+          classId: action.payload.classId,
+          boardId: action.payload.boardId,
+          subjectId: action.payload.subjectId,
+          schoolId: action.payload.schoolId,
+        },
+        {
+          id: "2",
+          name: "Chapter 2",
+          questions: [
+            {
+              id: "2",
+              questionId: "1",
+              question: "What is the capital of India?",
+              options: [
+                {
+                  option: "Delhi",
+                },
+                {
+                  option: "Mumbai",
+                },
+                {
+                  option: "Chennai",
+                },
+                {
+                  option: "Kolkata",
+                },
+              ],
+              answer: "Delhi",
+            },
+            {
+              id: "2",
+              questionId: "2",
+              question: "What is the capital of France?",
+              options: [
+                {
+                  option: "Paris",
+                },
+                {
+                  option: "London",
+                },
+                {
+                  option: "Berlin",
+                },
+                {
+                  option: "Rome",
+                },
+              ],
+              answer: "Paris",
+            },
+          ],
+          description:
+            "lorem ipsum dolor sit amet cons ectetur adipiscing elit",
           classId: action.payload.classId,
           boardId: action.payload.boardId,
           subjectId: action.payload.subjectId,
@@ -138,6 +402,7 @@ const chapterSlice = createSlice({
 });
 
 export const {
+  fetchChapters,
   addChapter,
   removeChapter,
   updateChapter,

@@ -5,7 +5,7 @@ import HeaderNavBar from "@/components/navbar";
 
 const AuthenticatedLayout = ({ children }: PropsWithChildren) => {
   return (
-    <div className="h-full w-full">
+    <div className="h-full w-full flex flex-col">
       <HeaderNavBar />
       <Body>{children}</Body>
     </div>
