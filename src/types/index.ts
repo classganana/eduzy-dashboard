@@ -5,7 +5,7 @@ export type IconSvgProps = SVGProps<SVGSVGElement> & {
 };
 
 export interface Question {
-  chapterId: string;
+  id: string;
 
   questionId: string;
   question: string;
@@ -21,8 +21,9 @@ export interface Chapter {
   boardId: string;
   subjectId: string;
 
-  chapterId: string;
-  chapterName: string;
+  id: string;
+  name: string;
+  description: string;
   questions: Question[];
 }
 

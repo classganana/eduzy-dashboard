@@ -3,7 +3,7 @@ type Props = {
 };
 
 const Body = ({ children }: Props) => {
-  return <div className="h-full w-full flex flex-col p-5">{children}</div>;
+  return <div className="flex-grow flex flex-col p-5">{children}</div>;
 };
 
 export default Body;
