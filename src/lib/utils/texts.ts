@@ -4,4 +4,7 @@ export const AppTexts = {
 
   closeMenuAriaLabel: "Close menu",
   openMenuAriaLabel: "Open menu",
+
+  correctQuestion: "Correct",
+  incorrectQuestion: "Incorrect",
 };
