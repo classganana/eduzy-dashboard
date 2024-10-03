@@ -15,8 +15,7 @@ export interface Question {
     id: string;
   }[];
   answer: {
-    option: string;
-    id: string;
+    optionIds: string[];
     value?: string;
   };
 }
