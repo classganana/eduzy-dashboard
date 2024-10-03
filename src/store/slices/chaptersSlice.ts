@@ -47,8 +47,7 @@ const chapterSlice = createSlice({
                 },
               ],
               answer: {
-                option: "Delhi",
-                id: "o1",
+                optionIds: ["o1", "o2"],
               },
             },
             {
@@ -73,8 +72,7 @@ const chapterSlice = createSlice({
                 },
               ],
               answer: {
-                option: "Paris",
-                id: "o1",
+                optionIds: ["o1"],
               },
             },
           ],
@@ -111,8 +109,7 @@ const chapterSlice = createSlice({
                 },
               ],
               answer: {
-                option: "Delhi",
-                id: "o1",
+                optionIds: ["o1"],
               },
             },
             {
@@ -137,8 +134,7 @@ const chapterSlice = createSlice({
                 },
               ],
               answer: {
-                option: "Paris",
-                id: "o1",
+                optionIds: ["o1", "o2"],
               },
             },
           ],
@@ -175,8 +171,7 @@ const chapterSlice = createSlice({
                 },
               ],
               answer: {
-                option: "Delhi",
-                id: "o1",
+                optionIds: ["o1", "o2"],
               },
             },
             {
@@ -201,8 +196,7 @@ const chapterSlice = createSlice({
                 },
               ],
               answer: {
-                option: "Paris",
-                id: "o1",
+                optionIds: ["o1"],
               },
             },
           ],
