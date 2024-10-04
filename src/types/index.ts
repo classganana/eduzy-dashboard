@@ -1,18 +1,23 @@
+import { ButtonProps } from "@nextui-org/react";
 import { SVGProps } from "react";
 
 export type IconSvgProps = SVGProps<SVGSVGElement> & {
   size?: number;
 };
 
-export interface Question {
-  chapterId: string;
+export type AppButtonProps = { label: string } & ButtonProps;
 
-  questionId: string;
+export interface Question {
+  id: string;
   question: string;
   options: {
     option: string;
+    id: string;
   }[];
-  answer: string;
+  answer: {
+    optionIds: string[];
+    value?: string;
+  };
 }
 
 export interface Chapter {
@@ -21,8 +26,9 @@ export interface Chapter {
   boardId: string;
   subjectId: string;
 
-  chapterId: string;
-  chapterName: string;
+  id: string;
+  name: string;
+  description: string;
   questions: Question[];
 }
 

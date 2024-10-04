@@ -8,7 +8,7 @@ const chapterSlice = createSlice({
   name: "chapterSlice",
   initialState: chapters,
   reducers: {
-    initializeChapters(
+    fetchChapters(
       state,
       action: PayloadAction<{
         classId: string;
@@ -22,100 +22,186 @@ const chapterSlice = createSlice({
       // TODO: integrate api
       const chapters = [
         {
-          chapterId: "1",
-          chapterName: "Chapter 1",
+          id: "c1",
+          name: "Chapter 1",
           questions: [
             {
-              chapterId: "1",
-              questionId: "1",
+              id: "q1",
               question: "What is the capital of India?",
               options: [
                 {
                   option: "Delhi",
+                  id: "o1",
                 },
                 {
                   option: "Mumbai",
+                  id: "o2",
                 },
                 {
                   option: "Chennai",
+                  id: "o3",
                 },
                 {
                   option: "Kolkata",
+                  id: "o4",
                 },
               ],
-              answer: "Delhi",
+              answer: {
+                optionIds: ["o1", "o2"],
+              },
             },
             {
-              chapterId: "1",
-              questionId: "2",
+              id: "q2",
               question: "What is the capital of France?",
               options: [
                 {
                   option: "Paris",
+                  id: "o1",
                 },
                 {
                   option: "London",
+                  id: "o2",
                 },
                 {
                   option: "Berlin",
+                  id: "o3",
                 },
                 {
                   option: "Rome",
+                  id: "o4",
                 },
               ],
-              answer: "Paris",
+              answer: {
+                optionIds: ["o1"],
+              },
             },
           ],
+          description:
+            "lorem ipsum dolor sit amet cons ectetur adipiscing elit",
           classId: action.payload.classId,
           boardId: action.payload.boardId,
           subjectId: action.payload.subjectId,
           schoolId: action.payload.schoolId,
         },
         {
-          chapterId: "2",
-          chapterName: "Chapter 2",
+          id: "c2",
+          name: "Chapter 2",
           questions: [
             {
-              chapterId: "2",
-              questionId: "1",
+              id: "q1",
               question: "What is the capital of India?",
               options: [
                 {
                   option: "Delhi",
+                  id: "o1",
                 },
                 {
                   option: "Mumbai",
+                  id: "o2",
                 },
                 {
                   option: "Chennai",
+                  id: "o3",
                 },
                 {
                   option: "Kolkata",
+                  id: "o4",
                 },
               ],
-              answer: "Delhi",
+              answer: {
+                optionIds: ["o1"],
+              },
             },
             {
-              chapterId: "2",
-              questionId: "2",
+              id: "q2",
               question: "What is the capital of France?",
               options: [
                 {
                   option: "Paris",
+                  id: "o1",
                 },
                 {
                   option: "London",
+                  id: "o2",
                 },
                 {
                   option: "Berlin",
+                  id: "o3",
                 },
                 {
                   option: "Rome",
+                  id: "o4",
                 },
               ],
-              answer: "Paris",
+              answer: {
+                optionIds: ["o1", "o2"],
+              },
             },
           ],
+          description:
+            "lorem ipsum dolor sit amet cons ectetur adipiscing elit",
+          classId: action.payload.classId,
+          boardId: action.payload.boardId,
+          subjectId: action.payload.subjectId,
+          schoolId: action.payload.schoolId,
+        },
+        {
+          id: "c3",
+          name: "Chapter 3",
+          questions: [
+            {
+              id: "q1",
+              question: "What is the capital of India?",
+              options: [
+                {
+                  option: "Delhi",
+                  id: "o1",
+                },
+                {
+                  option: "Mumbai",
+                  id: "o2",
+                },
+                {
+                  option: "Chennai",
+                  id: "o3",
+                },
+                {
+                  option: "Kolkata",
+                  id: "o4",
+                },
+              ],
+              answer: {
+                optionIds: ["o1", "o2"],
+              },
+            },
+            {
+              id: "q2",
+              question: "What is the capital of France?",
+              options: [
+                {
+                  option: "Paris",
+                  id: "o1",
+                },
+                {
+                  option: "London",
+                  id: "o2",
+                },
+                {
+                  option: "Berlin",
+                  id: "o3",
+                },
+                {
+                  option: "Rome",
+                  id: "o4",
+                },
+              ],
+              answer: {
+                optionIds: ["o1"],
+              },
+            },
+          ],
+          description:
+            "lorem ipsum dolor sit amet cons ectetur adipiscing elit",
           classId: action.payload.classId,
           boardId: action.payload.boardId,
           subjectId: action.payload.subjectId,
@@ -138,6 +224,7 @@ const chapterSlice = createSlice({
 });
 
 export const {
+  fetchChapters,
   addChapter,
   removeChapter,
   updateChapter,
