@@ -1,4 +1,5 @@
 import AppModal from "./app-modal-button";
+import QuestionComponent from "./question-component";
 
 import { AppTexts } from "@/lib/utils/texts";
 import { Chapter } from "@/types";
@@ -15,10 +16,16 @@ const ChapterCard = ({ chapter }: Props) => {
       {chapter.description}
       <AppModal
         body={
-          <div>
-            {/* {chapter.questions.map((question, index) => {
-              return <QuestionComponent question={question} index={index} key={chapter.id+question.id} />;
-            })} */}
+          <div className="flex flex-col gap-5">
+            {chapter.questions.map((question, index) => {
+              return (
+                <QuestionComponent
+                  key={chapter.id + question.id}
+                  index={index}
+                  question={question}
+                />
+              );
+            })}
           </div>
         }
         header={AppTexts.previewQuestionsHeading}
