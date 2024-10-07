@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import ChapterCard from "@/components/chapterCard";
 import { useAppDispatch, useAppSelector } from "@/lib/utils/hooks";
 import { fetchChapters } from "@/store/slices/chaptersSlice";
+import ProfileDetails from "@/components/ProfileDetails/profile-details";
 
 type Props = {};
 
@@ -22,6 +23,22 @@ const Assessments = (_props: Props) => {
       }),
     );
   }, []);
+  const profileData = {
+    name: "Rekha Ramareddy",
+    email: "rekha.r@fks.edu",
+    number: "9970263474",
+    school: "FKS School",
+    profileImage: "",
+  };
+
+  const gradeSubjects = [
+    { grade: "Grade 5 A", subject: "English" },
+    { grade: "Grade 5 B", subject: "Math" },
+    { grade: "Grade 5 C", subject: "Science" },
+    { grade: "Grade 5 A", subject: "English" },
+    { grade: "Grade 5 B", subject: "Hindi" },
+    { grade: "Grade 5 C", subject: "Science" },
+  ];
 
   return (
     <div className="flex flex-wrap gap-4 justify-evenly">
@@ -36,6 +53,8 @@ const Assessments = (_props: Props) => {
           </div>
         );
       })}
+
+      <ProfileDetails gradeSubjects={gradeSubjects} profileData={profileData} />
     </div>
   );
 };
