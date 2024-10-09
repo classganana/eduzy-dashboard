@@ -1,10 +1,10 @@
 import {
   Table,
-  TableHeader,
-  TableColumn,
   TableBody,
-  TableRow,
   TableCell,
+  TableColumn,
+  TableHeader,
+  TableRow,
 } from "@nextui-org/react";
 
 import arrow from "../../assets/arrow.png"; // Correct import from your assets folder
@@ -45,18 +45,22 @@ const ReportTable: React.FC<ReportTableProps> = ({ columns, items }) => {
             key={column.key}
             className="text-left text-gray-600 px-4 py-2"
           >
-            {column.label}
-            {column.sortable && (
-              <img
-                alt="Sort"
-                className="inline-block ml-2 w-4 h-4"
-                src={arrow}
-              />
-            )}
+            {[
+              "student",
+              "attemptedQuestions",
+              "totalScore",
+              "scorePercentage",
+            ].includes(column.key) &&
+              column.sortable && (
+                <img
+                  alt="Sort"
+                  className="inline-block ml-2 w-4 h-4"
+                  src={arrow}
+                />
+              )}
           </TableColumn>
         ))}
       </TableHeader>
-
       <TableBody>
         {items.map((item) => (
           <TableRow key={item.key} className="hover:bg-gray-100">
