@@ -1,4 +1,3 @@
-import React from "react";
 
 import ProfileDetails from "@/components/ProfileDetail/profile-details"; // Ensure the path is correct
 
