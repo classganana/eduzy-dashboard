@@ -1,56 +1,56 @@
-import ReportTable from "@/components/ReortTable/report-table"; // Import the ReportTable
+// import ReportTable from "@/components/ReortTable/report-table"; // Import the ReportTable
 import ProfileDetails from "@/components/ProfileDetails/profile-details";
 // Data for the table
-const rows = [
-  {
-    key: "1",
-    student: "Chris Jose P",
-    attemptedQuestions: 48,
-    totalScore: "42 / 50",
-    scorePercentage: "84%",
-  },
-  {
-    key: "2",
-    student: "Chris Jose P",
-    attemptedQuestions: 48,
-    totalScore: "42 / 50",
-    scorePercentage: "89%",
-  },
-  {
-    key: "3",
-    student: "Chris Jose P",
-    attemptedQuestions: 48,
-    totalScore: "42 / 50",
-    scorePercentage: "84%",
-  },
-  {
-    key: "4",
-    student: "Chris Jose P",
-    attemptedQuestions: 48,
-    totalScore: "42 / 50",
-    scorePercentage: "84%",
-  },
-];
+// const rows = [
+//   {
+//     key: "1",
+//     student: "Chris Jose P",
+//     attemptedQuestions: 48,
+//     totalScore: "42 / 50",
+//     scorePercentage: "84%",
+//   },
+//   {
+//     key: "2",
+//     student: "Chris Jose P",
+//     attemptedQuestions: 48,
+//     totalScore: "42 / 50",
+//     scorePercentage: "89%",
+//   },
+//   {
+//     key: "3",
+//     student: "Chris Jose P",
+//     attemptedQuestions: 48,
+//     totalScore: "42 / 50",
+//     scorePercentage: "84%",
+//   },
+//   {
+//     key: "4",
+//     student: "Chris Jose P",
+//     attemptedQuestions: 48,
+//     totalScore: "42 / 50",
+//     scorePercentage: "84%",
+//   },
+// ];
 
-// Columns for the table
-const columns = [
-  {
-    key: "student",
-    label: "Student",
-  },
-  {
-    key: "attemptedQuestions",
-    label: "Attempted questions",
-  },
-  {
-    key: "totalScore",
-    label: "Total score",
-  },
-  {
-    key: "scorePercentage",
-    label: "Score %",
-  },
-];
+// // Columns for the table
+// const columns = [
+//   {
+//     key: "student",
+//     label: "Student",
+//   },
+//   {
+//     key: "attemptedQuestions",
+//     label: "Attempted questions",
+//   },
+//   {
+//     key: "totalScore",
+//     label: "Total score",
+//   },
+//   {
+//     key: "scorePercentage",
+//     label: "Score %",
+//   },
+// ];
 
 const profileData = {
   name: "Rekha Ramareddy",
@@ -75,7 +75,7 @@ const Reports = (_props: Props) => {
   return (
     <div>
       <h1>Reports</h1> {/* Add a title */}
-      <ReportTable columns={columns} items={rows} />{" "}
+      {/* <ReportTable columns={columns} items={rows} />{" "} */}
       {/* Pass columns and rows */}
       <ProfileDetails gradeSubjects={gradeSubjects} profileData={profileData} />
     </div>
