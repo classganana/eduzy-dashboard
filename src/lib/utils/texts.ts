@@ -8,4 +8,7 @@ export const AppTexts = {
   incorrectQuestion: "Incorrect",
   preview: "Preview",
   previewQuestionsHeading: "Questions Preview",
+  viewReport: "View Report",
+  avgScore: "Avg Score",
+  attempted: "Attempted",
 };
