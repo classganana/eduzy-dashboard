@@ -1,56 +1,44 @@
 import React, { useState, useRef } from "react";
 
-import { ProfileDetailsProps } from "./profile-details.interface"; // Adjust path if necessary
+import { ProfileDetailsProps } from "./profile-details.interface";
 
 import editIcon from "@/assets/pencil.png";
-import EditProfile from "@/pages/editProfile"; // Import the EditProfile component
+import EditProfile from "@/pages/editProfile";
 
 const ProfileDetails: React.FC<ProfileDetailsProps> = ({
   profileData,
   gradeSubjects,
 }) => {
-  const [image, setImage] = useState<string>(profileData.profileImage || ""); // Profile image state
-
-  // State to manage editing mode
+  const [image, setImage] = useState<string>(profileData.profileImage || "");
   const [isEditing, setIsEditing] = useState<boolean>(false);
-
-  // State to hold form data (with unified structure for EditProfile)
   const [formData, setFormData] = useState({
     name: profileData.name || "",
     school: profileData.school || "",
     email: profileData.email || "",
-    phoneNumber: profileData.number || "", // Aligning with EditProfile prop name
+    phoneNumber: profileData.number || "",
   });
 
-  // Reference to the hidden file input
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  // Handle image change (upload new image)
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
 
     if (file) {
       const reader = new FileReader();
 
-      reader.onload = () => {
-        setImage(reader.result as string); // Update the state with the new image URL
-        // Optionally, save the image to local storage or send it to a server
-      };
+      reader.onload = () => setImage(reader.result as string);
       reader.readAsDataURL(file);
     }
   };
 
-  // Define the handleSave function to pass to EditProfile
   const handleSave = () => {
-    // Add logic to save form data (e.g., send to server or update profile)
     console.log("Form data saved:", formData);
-    setIsEditing(false); // Exit editing mode after saving
+    setIsEditing(false);
   };
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-50 p-6">
       <div className="w-full max-w-lg bg-white rounded-xl shadow-lg p-8 mt-6">
-        {/* Profile Image (outside background area) */}
         <div className="flex items-center justify-center relative mb-6">
           <div className="w-20 h-20 bg-blue-200 flex items-center justify-center rounded-full">
             {image ? (
@@ -64,35 +52,31 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({
             )}
           </div>
 
-          {/* Edit button to upload new image */}
           <button
             className="absolute top-12 right-40 mr-2"
-            onClick={() => fileInputRef.current?.click()} // Trigger file input click
+            onClick={() => fileInputRef.current?.click()}
           >
             <img alt="Edit" className="h-8 w-8" src={editIcon} />
           </button>
 
-          {/* Hidden file input for image upload */}
           <input
             ref={fileInputRef}
             accept="image/*"
             style={{ display: "none" }}
             type="file"
-            onChange={handleImageChange} // Handle file selection
+            onChange={handleImageChange}
           />
         </div>
 
-        {/* Conditional rendering: If editing, show EditProfile, otherwise show profile information */}
         {isEditing ? (
           <EditProfile
             formData={formData}
-            handleSave={handleSave} // Pass handleSave to EditProfile
+            handleSave={handleSave}
             setFormData={setFormData}
           />
         ) : (
           <>
             <div className="bg-blue-50 p-6 rounded-lg relative">
-              {/* Edit button positioned in the top-right corner */}
               <button
                 className="absolute top-2 right-2 p-3"
                 onClick={() => setIsEditing(true)}
@@ -112,7 +96,6 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({
               </div>
             </div>
 
-            {/* Grade and Subjects Section */}
             <div className="mt-6">
               <h3 className="text-sm font-semibold text-gray-500 mb-2">
                 GRADE AND SUBJECTS
