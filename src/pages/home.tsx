@@ -1,35 +1,22 @@
+import { Image } from "@nextui-org/react";
 
-import ProfileDetails from "@/components/ProfileDetail/profile-details"; // Ensure the path is correct
+import { greetingMessageBasedOnTime } from "@/lib/utils";
+import { AppTexts } from "@/lib/utils/texts";
 
-function Home() {
-  // Profile data
-  const profileData = {
-    name: "Rekha Ramareddy",
-    email: "rekha.r@fks.edu",
-    number: "9970263474",
-    school: "FKS School",
-    profileImage: "",
-  };
+type Props = {};
 
-  // Both grades and subjects data
-  const gradeSubjects = [
-    { grade: "Grade 5 A", subject: "English" },
-    { grade: "Grade 5 B", subject: "Math" },
-    { grade: "Grade 5 C", subject: "Science" },
-    { grade: "Grade 5 A", subject: "English" },
-    { grade: "Grade 5 B", subject: "Hindi" },
-    { grade: "Grade 5 C", subject: "Science" },
-  ];
-
+const Home = (_props: Props) => {
   return (
-    <>
-      {/* Some additional content */}
-      <div style={{ color: "blue" }}>Press me</div>
-
-      {/* Profile details component */}
-      <ProfileDetails gradeSubjects={gradeSubjects} profileData={profileData} />
-    </>
+    <div className="w-full h-full">
+      <div className="flex flex-col items-center justify-center gap-3">
+        <div className="w-[50%] min-w-64">
+          <Image src="/images/fill-out.png" />
+        </div>
+        <div className="text-2xl font-bold">{greetingMessageBasedOnTime()}</div>
+        <div className="text-xl">{AppTexts.dashboardWelcomeText}</div>
+      </div>
+    </div>
   );
-}
+};
 
 export default Home;

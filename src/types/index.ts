@@ -1,4 +1,5 @@
 import { ButtonProps } from "@nextui-org/react";
+import { JwtPayload } from "jwt-decode";
 import { SVGProps } from "react";
 
 export type IconSvgProps = SVGProps<SVGSVGElement> & {
@@ -45,4 +46,14 @@ export interface Assessment {
 
   startTime: Date;
   endTime: Date;
+}
+
+export interface UserJwtTokenPayload extends JwtPayload {
+  userId: string;
+  role: string;
+  schoolId: string;
+}
+
+export interface UserLoginResponse {
+  accessToken: string;
 }

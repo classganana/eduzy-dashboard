@@ -8,4 +8,10 @@ export const AppTexts = {
   incorrectQuestion: "Incorrect",
   preview: "Preview",
   previewQuestionsHeading: "Questions Preview",
+
+  goodMorningText: "Good Morning",
+  goodAfternoonText: "Good Afternoon",
+  goodEveningText: "Good Evening",
+  goodNightText: "Good Night",
+  dashboardWelcomeText: "Welcome to the Eduzy Dashboard",
 };

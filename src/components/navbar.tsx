@@ -18,8 +18,9 @@ import { useLocation, useNavigate } from "react-router-dom";
 
 import { DefaultUserIcon, EduzyLogoWithTitle } from "./icons";
 
-import { AppTexts } from "@/lib/utils/texts";
+import { removeTokenFromLocalStorage } from "@/lib/utils";
 import { Constants } from "@/lib/utils/constants";
+import { AppTexts } from "@/lib/utils/texts";
 
 export default function HeaderNavBar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -129,7 +130,14 @@ export default function HeaderNavBar() {
             </DropdownItem>
             <DropdownItem key="settings">My Settings</DropdownItem>
             <DropdownItem key="system">System</DropdownItem>
-            <DropdownItem key="logout" color="danger">
+            <DropdownItem
+              key="logout"
+              color="danger"
+              onClick={() => {
+                removeTokenFromLocalStorage();
+                navigate(Constants.routes.login);
+              }}
+            >
               Log Out
             </DropdownItem>
           </DropdownMenu>

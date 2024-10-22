@@ -13,6 +13,10 @@ export default {
       colors: {
         primary: "#3050EB",
       },
+      backgroundImage: {
+        "primary-gradient":
+          "linear-gradient(180deg, rgba(57, 91, 255, 1), rgba(33, 44, 142, 1))",
+      },
     },
   },
   plugins: [
