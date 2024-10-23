@@ -3,7 +3,7 @@ import { JwtPayload } from "jwt-decode";
 import { SVGProps } from "react";
 
 export type IconSvgProps = SVGProps<SVGSVGElement> & {
-  size?: number;
+  size?: string;
 };
 
 export type AppButtonProps = { label: string } & ButtonProps;

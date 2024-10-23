@@ -47,18 +47,21 @@ const LoginPage = () => {
 
   return (
     <div className="bg-primary-gradient relative w-screen h-screen flex flex-col items-center justify-center">
-      <Card className="min-w-[320px] w-[60%] py-5" radius="sm" shadow="sm">
+      <Card
+        className="min-w-[300px] w-[60%] py-5 max-w-96 self-center"
+        radius="sm"
+        shadow="sm"
+      >
         <CardHeader className="justify-center">
           <EduzyLogoWithTitle className="w-[5em] h-[3em]" />
         </CardHeader>
-        <CardBody className="px-11">
+        <CardBody className="px-5 py-2 justify-center">
           <form className="flex flex-col gap-4 w-full" onSubmit={handleSubmit}>
             <Input
               fullWidth
               isRequired
               label="Username"
               placeholder="Enter your username"
-              size="md"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
             />
@@ -67,7 +70,6 @@ const LoginPage = () => {
               isRequired
               label="Password"
               placeholder="Enter your password"
-              size="md"
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
@@ -89,7 +91,7 @@ const LoginPage = () => {
         </CardBody>
       </Card>
       <div className="absolute bottom-3 right-3">
-        <EduzyLogoWithTransparentBG />
+        <EduzyLogoWithTransparentBG size={"6em"} />
       </div>
     </div>
   );
