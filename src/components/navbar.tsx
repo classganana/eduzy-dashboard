@@ -55,6 +55,7 @@ export default function HeaderNavBar() {
           "data-[active=true]:after:h-[2px]",
           "data-[active=true]:after:rounded-[2px]",
           "data-[active=true]:after:bg-primary",
+          "text-md",
         ],
       }}
       height={"3.7rem"}
@@ -120,7 +121,7 @@ export default function HeaderNavBar() {
               classNames={{
                 base: "bg-transparent",
               }}
-              icon={<DefaultUserIcon />}
+              icon={<DefaultUserIcon size="2rem" />}
             />
           </DropdownTrigger>
           <DropdownMenu aria-label="Profile Actions" variant="flat">
