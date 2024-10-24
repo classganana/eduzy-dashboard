@@ -1,5 +1,5 @@
 // import ReportTable from "@/components/ReortTable/report-table"; // Import the ReportTable
-import ProfileDetails from "@/components/ProfileDetails/profile-details";
+import ProfileDetails from "@/components/ProfileDetail/profile-details";
 // Data for the table
 // const rows = [
 //   {
