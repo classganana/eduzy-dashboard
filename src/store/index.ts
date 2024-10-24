@@ -1,11 +1,13 @@
 import { configureStore } from "@reduxjs/toolkit";
 
+import assessmentReducer from "./slices/assessmentSlice";
 import chaptersReducer from "./slices/chaptersSlice";
 import userReducer from "./slices/userSlice";
 
 export const applicationStore = configureStore({
   reducer: {
     user: userReducer,
+    assessments: assessmentReducer,
     chapters: chaptersReducer,
   },
 });

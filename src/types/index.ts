@@ -34,18 +34,25 @@ export interface Chapter {
 }
 
 export interface Assessment {
-  schoolId: string;
-  boardId: string;
-  subjectId: string;
-  classId: string;
-  teacherId: string;
-
   assessmentId: string;
-  chapters: string[];
-  questions: string[];
-
-  startTime: Date;
-  endTime: Date;
+  assessmentName: string;
+  classId: string;
+  subjectId: string;
+  chapters: {
+    chapterId: string;
+    questions: Question[];
+  }[];
+  startDate: string;
+  endDate: string;
+  created: {
+    userId: string;
+    data: string;
+  };
+  updated: {
+    userId: string;
+    data: string;
+  };
+  status: string;
 }
 
 export interface UserJwtTokenPayload extends JwtPayload {

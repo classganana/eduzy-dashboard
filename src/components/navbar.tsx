@@ -59,6 +59,7 @@ export default function HeaderNavBar() {
         ],
       }}
       height={"3.7rem"}
+      maxWidth="full"
       onMenuOpenChange={setIsMenuOpen}
     >
       <NavbarContent justify="start">

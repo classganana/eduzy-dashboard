@@ -1,4 +1,4 @@
-import { createBrowserRouter } from "react-router-dom";
+import { createBrowserRouter, Navigate } from "react-router-dom";
 
 import App from "./App";
 import ProtectedRoute from "./components/protected-route";
@@ -11,7 +11,7 @@ import Reports from "./pages/reports";
 
 export const applicationRouter = createBrowserRouter([
   {
-    path: "/",
+    path: "",
     element: <App />,
     errorElement: <ErrorPage description="Page Not found" title="404" />,
     children: [
@@ -23,6 +23,11 @@ export const applicationRouter = createBrowserRouter([
         path: "",
         element: <ProtectedRoute />,
         children: [
+          {
+            // Redirect to /home when accessing the root path
+            path: "/",
+            element: <Navigate to={Constants.routes.home} />,
+          },
           {
             path: Constants.routes.home,
             element: <Home />,
