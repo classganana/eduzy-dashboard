@@ -1,3 +1,5 @@
+import { nextui } from "@nextui-org/theme";
+
 /** @type {import('tailwindcss').Config} */
 const { nextui, colors } = require("@nextui-org/theme");
 

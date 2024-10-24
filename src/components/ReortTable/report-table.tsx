@@ -1,10 +1,10 @@
 import {
   Table,
-  TableHeader,
-  TableColumn,
   TableBody,
-  TableRow,
   TableCell,
+  TableColumn,
+  TableHeader,
+  TableRow,
 } from "@nextui-org/react";
 
 import arrow from "../../assets/arrow.png"; // Correct import from your assets folder

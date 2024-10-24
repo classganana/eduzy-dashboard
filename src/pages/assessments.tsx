@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import {
   Accordion,
   AccordionItem,
@@ -7,6 +6,7 @@ import {
   Image,
   Spinner,
 } from "@nextui-org/react";
+import { useEffect } from "react";
 
 import AssessmentDetails from "@/components/assessment-details";
 import { useAppDispatch, useAppSelector } from "@/lib/utils/hooks";
