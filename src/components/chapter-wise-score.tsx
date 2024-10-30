@@ -10,7 +10,7 @@ type Props = {
   onViewReport: () => void;
 };
 
-function AssessmentPerSubject({ assessment, onViewReport }: Props) {
+function chapterWiseScore({ assessment, onViewReport }: Props) {
   return (
     <Card className="grid grid-cols-12 break-words px-4 py-4 space-x-4 w-[100%]">
       <div className="flex flex-col justify-between col-span-12 min-[700px]:col-span-6">
@@ -47,4 +47,4 @@ function AssessmentPerSubject({ assessment, onViewReport }: Props) {
   );
 }
 
-export default AssessmentPerSubject;
+export default chapterWiseScore;
