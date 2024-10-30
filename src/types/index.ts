@@ -46,3 +46,11 @@ export interface Assessment {
   startTime: Date;
   endTime: Date;
 }
+
+export interface AssessmentProps {
+  chapterName: string;
+  avgScore: number;
+  attemptedPercentage: number;
+  notUnderstoodTopics: string;
+  assessmentDate: string;
+}
