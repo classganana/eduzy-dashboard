@@ -55,6 +55,18 @@ export interface Assessment {
   status: string;
 }
 
+export interface CreateAsessmentRequest {
+  assessmentName: string;
+  classId: string;
+  subjectId: string;
+  chapters: {
+    chapterId: string;
+    questions: Question[];
+  }[];
+  startDate: string;
+  endDate: string;
+}
+
 export interface UserJwtTokenPayload extends JwtPayload {
   userId: string;
   role: string;

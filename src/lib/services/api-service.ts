@@ -1,4 +1,4 @@
-import { Assessment, UserLoginResponse } from "@/types";
+import { Assessment, CreateAsessmentRequest, UserLoginResponse } from "@/types";
 
 export class ApiService {
   private static instance: ApiService;
@@ -43,7 +43,7 @@ export class ApiService {
 
       return response;
     } catch (error) {
-      console.log(error);
+      console.error(error);
 
       return null;
     }
@@ -70,7 +70,7 @@ export class ApiService {
         },
       ];
     } catch (error) {
-      console.log(error);
+      console.error(error);
 
       return null;
     }
@@ -118,9 +118,21 @@ export class ApiService {
         },
       ];
     } catch (error) {
-      console.log(error);
+      console.error(error);
 
       return null;
+    }
+  }
+
+  async createAssessment(assessment: CreateAsessmentRequest) {
+    try {
+      //const response = await this.dashboardFetch()
+      //access token
+      return assessment;
+    } catch (error) {
+      console.error(error);
+
+      return false;
     }
   }
 
@@ -411,7 +423,7 @@ export class ApiService {
         },
       ];
     } catch (error) {
-      console.log(error);
+      console.error(error);
 
       return null;
     }

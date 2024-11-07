@@ -6,6 +6,7 @@ export class Constants {
     reports: "/reports",
     home: "/home",
     login: "/login",
+    createTest: "/create-test",
   };
 
   public static readonly LocalStorageAccessTokenKey = "E_D_ACCESS_TOKEN";

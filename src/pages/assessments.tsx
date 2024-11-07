@@ -1,40 +1,45 @@
-import {
-  Accordion,
-  AccordionItem,
-  Button,
-  Chip,
-  Image,
-  Spinner,
-} from "@nextui-org/react";
+import { Button, Spinner } from "@nextui-org/react";
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
-import AssessmentDetails from "@/components/assessment-details";
+import { FillOutBroIcon } from "@/components/icons";
+import PlaceholderCard from "@/components/placeholder-card";
+import TestCard from "@/components/test-card";
+import { Constants } from "@/lib/utils/constants";
 import { useAppDispatch, useAppSelector } from "@/lib/utils/hooks";
 import { AppTexts } from "@/lib/utils/texts";
 import { fetchAssessments } from "@/store/slices/assessmentSlice";
-import { Assessment } from "@/types";
 
 type Props = {};
 
 const Assessments = (_props: Props) => {
   const assessmentInfo = useAppSelector((state) => state.assessments);
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
     /* Initialize the chapters */
     dispatch(fetchAssessments());
   }, []);
 
+  const handleCreateTestClick = () => {
+    navigate(Constants.routes.createTest);
+  };
+
+  const hasAssessments = assessmentInfo.data?.length !== 0;
+
   return (
     <div className="flex-grow flex flex-col gap-4 px-8">
-      <div className="flex justify-between">
-        <h3 className="text-xl font-bold">{AppTexts.assessmentsHeading}</h3>
-        <Button color="primary" size="sm">
-          {AppTexts.createAssessment}
-        </Button>
-      </div>
+      {hasAssessments && (
+        <div className="flex justify-between">
+          <h3 className="text-xl font-bold">{AppTexts.testsHeading}</h3>
+          <Button color="primary" size="sm">
+            {AppTexts.createTest}
+          </Button>
+        </div>
+      )}
       <div className="flex-grow p-5">
-        {assessmentInfo.loading ? (
+        {assessmentInfo.loading && (
           <Spinner
             className="w-full m-2"
             color="primary"
@@ -42,37 +47,22 @@ const Assessments = (_props: Props) => {
             labelColor="primary"
             size="lg"
           />
-        ) : assessmentInfo.data?.length === 0 ? (
-          <div className="flex flex-col items-center justify-center gap-4">
-            <Image height={200} src="/no-data.mp4" width={200} />
-            <p className="text-lg font-bold">
-              {AppTexts.assessmentsNotFoundText}
-            </p>
-          </div>
+        )}
+        {!assessmentInfo.loading && !hasAssessments ? (
+          <PlaceholderCard
+            actionButtons={[
+              {
+                label: AppTexts.createTest,
+                onClick: handleCreateTestClick,
+                color: "primary",
+              },
+            ]}
+            description={AppTexts.noTestsCardDescription}
+            icon={<FillOutBroIcon size={"20em"} />}
+            title={AppTexts.noTestsCardTitle}
+          />
         ) : (
-          <Accordion variant="splitted">
-            {assessmentInfo.data.map((assessment: Assessment) => {
-              return (
-                /* Assessment */
-                <AccordionItem
-                  key={assessment.assessmentId}
-                  aria-label={assessment.assessmentName}
-                  title={
-                    <div className="flex items-center gap-6 justify-between">
-                      <p className="font-bold text-lg my-2">
-                        {assessment.assessmentName}
-                      </p>{" "}
-                      <Chip color="secondary" size="sm">
-                        {assessment.status}
-                      </Chip>
-                    </div>
-                  }
-                >
-                  <AssessmentDetails assessment={assessment} />
-                </AccordionItem>
-              );
-            })}
-          </Accordion>
+          <TestCard />
         )}
       </div>
     </div>

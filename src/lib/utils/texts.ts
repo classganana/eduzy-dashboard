@@ -1,5 +1,5 @@
 export const AppTexts = {
-  navbarAssessmentsText: "Assessments",
+  navbarTestsTexts: "Tests",
   navbarReportsText: "Reports",
   closeMenuAriaLabel: "Close menu",
   openMenuAriaLabel: "Open menu",
@@ -18,14 +18,16 @@ export const AppTexts = {
   loadingText: "Just a sec while we gather everything...",
 
   /* Assessments */
-  assessmentsHeading: "Assessments",
+  testsHeading: "Tests",
   startDate: "Start Date",
   endDate: "End Date",
   assessmentName: "Assessment Name",
   chapters: "Chapters",
-  createAssessment: "Create Assessment",
+  createTest: "Create Test",
   questions: "Questions",
   class: "Class",
   subject: "Subject",
-  assessmentsNotFoundText: "No assessments found, let's create your first one!",
+  noTestsCardTitle: "Your students are waiting for a challenge! 😉",
+  noTestsCardDescription:
+    "Tests are a great way to assess your students understanding of chapters. Send one now.",
 };
