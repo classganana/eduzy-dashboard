@@ -6,7 +6,7 @@ export type IconSvgProps = SVGProps<SVGSVGElement> & {
   size?: string;
 };
 
-export type AppButtonProps = { label: string } & ButtonProps;
+export type AppButtonProps = { label: string; payload?: any } & ButtonProps;
 
 export interface Question {
   id: string;
@@ -30,7 +30,7 @@ export interface Chapter {
   id: string;
   name: string;
   description: string;
-  questions: Question[];
+  questions?: Question[];
 }
 
 export interface Assessment {
@@ -75,4 +75,12 @@ export interface UserJwtTokenPayload extends JwtPayload {
 
 export interface UserLoginResponse {
   accessToken: string;
+}
+
+export interface Chapters {
+  classId: string;
+  subjectId: string;
+  schoolId: string;
+  boardId: string;
+  chapters: Omit<Chapter, "questions">[];
 }

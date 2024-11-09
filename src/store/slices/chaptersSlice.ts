@@ -1,236 +1,64 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import {
+  ActionReducerMapBuilder,
+  createAsyncThunk,
+  createSlice,
+} from "@reduxjs/toolkit";
 
-import { Chapter } from "@/types";
+import { ApiService } from "@/lib/services/api-service";
+import { Chapters } from "@/types";
 
-const chapters: Chapter[] = [];
+interface ChapterState {
+  data: Chapters | null;
+  loading: boolean;
+}
+
+const chapters: ChapterState = {
+  data: null,
+  loading: false,
+};
 
 const chapterSlice = createSlice({
-  name: "chapterSlice",
+  name: "chapters",
   initialState: chapters,
   reducers: {
-    fetchChapters(
-      state,
-      action: PayloadAction<{
-        classId: string;
-        boardId: string;
-        subjectId: string;
-        schoolId: string;
-      }>,
-    ) {
-      /* Get from some api call and assign */
-      console.log(state);
-      // TODO: integrate api
-      const chapters = [
-        {
-          id: "c1",
-          name: "Chapter 1",
-          questions: [
-            {
-              id: "q1",
-              question: "What is the capital of India?",
-              options: [
-                {
-                  option: "Delhi",
-                  id: "o1",
-                },
-                {
-                  option: "Mumbai",
-                  id: "o2",
-                },
-                {
-                  option: "Chennai",
-                  id: "o3",
-                },
-                {
-                  option: "Kolkata",
-                  id: "o4",
-                },
-              ],
-              answer: {
-                optionIds: ["o1", "o2"],
-              },
-            },
-            {
-              id: "q2",
-              question: "What is the capital of France?",
-              options: [
-                {
-                  option: "Paris",
-                  id: "o1",
-                },
-                {
-                  option: "London",
-                  id: "o2",
-                },
-                {
-                  option: "Berlin",
-                  id: "o3",
-                },
-                {
-                  option: "Rome",
-                  id: "o4",
-                },
-              ],
-              answer: {
-                optionIds: ["o1"],
-              },
-            },
-          ],
-          description:
-            "lorem ipsum dolor sit amet cons ectetur adipiscing elit",
-          classId: action.payload.classId,
-          boardId: action.payload.boardId,
-          subjectId: action.payload.subjectId,
-          schoolId: action.payload.schoolId,
-        },
-        {
-          id: "c2",
-          name: "Chapter 2",
-          questions: [
-            {
-              id: "q1",
-              question: "What is the capital of India?",
-              options: [
-                {
-                  option: "Delhi",
-                  id: "o1",
-                },
-                {
-                  option: "Mumbai",
-                  id: "o2",
-                },
-                {
-                  option: "Chennai",
-                  id: "o3",
-                },
-                {
-                  option: "Kolkata",
-                  id: "o4",
-                },
-              ],
-              answer: {
-                optionIds: ["o1"],
-              },
-            },
-            {
-              id: "q2",
-              question: "What is the capital of France?",
-              options: [
-                {
-                  option: "Paris",
-                  id: "o1",
-                },
-                {
-                  option: "London",
-                  id: "o2",
-                },
-                {
-                  option: "Berlin",
-                  id: "o3",
-                },
-                {
-                  option: "Rome",
-                  id: "o4",
-                },
-              ],
-              answer: {
-                optionIds: ["o1", "o2"],
-              },
-            },
-          ],
-          description:
-            "lorem ipsum dolor sit amet cons ectetur adipiscing elit",
-          classId: action.payload.classId,
-          boardId: action.payload.boardId,
-          subjectId: action.payload.subjectId,
-          schoolId: action.payload.schoolId,
-        },
-        {
-          id: "c3",
-          name: "Chapter 3",
-          questions: [
-            {
-              id: "q1",
-              question: "What is the capital of India?",
-              options: [
-                {
-                  option: "Delhi",
-                  id: "o1",
-                },
-                {
-                  option: "Mumbai",
-                  id: "o2",
-                },
-                {
-                  option: "Chennai",
-                  id: "o3",
-                },
-                {
-                  option: "Kolkata",
-                  id: "o4",
-                },
-              ],
-              answer: {
-                optionIds: ["o1", "o2"],
-              },
-            },
-            {
-              id: "q2",
-              question: "What is the capital of France?",
-              options: [
-                {
-                  option: "Paris",
-                  id: "o1",
-                },
-                {
-                  option: "London",
-                  id: "o2",
-                },
-                {
-                  option: "Berlin",
-                  id: "o3",
-                },
-                {
-                  option: "Rome",
-                  id: "o4",
-                },
-              ],
-              answer: {
-                optionIds: ["o1"],
-              },
-            },
-          ],
-          description:
-            "lorem ipsum dolor sit amet cons ectetur adipiscing elit",
-          classId: action.payload.classId,
-          boardId: action.payload.boardId,
-          subjectId: action.payload.subjectId,
-          schoolId: action.payload.schoolId,
-        },
-      ];
-
-      return chapters;
-    },
-
-    /* Complete these methods if required. */
-    addChapter() {},
+    createChapter() {},
     updateChapter() {},
     removeChapter() {},
-
-    removeQuestion() {},
-    addQuestion() {},
-    updateQuestion() {},
+  },
+  extraReducers: (builder: ActionReducerMapBuilder<ChapterState>) => {
+    /* Fetch Chapters */
+    builder.addCase(fetchChapters.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(fetchChapters.fulfilled, (state, action) => {
+      if (action.payload) state.data = action.payload;
+      state.loading = false;
+    });
+    builder.addCase(fetchChapters.rejected, (state, _action) => {
+      state.loading = false;
+      state.data = null;
+    });
   },
 });
 
-export const {
-  fetchChapters,
-  addChapter,
-  removeChapter,
-  updateChapter,
-  addQuestion,
-  removeQuestion,
-  updateQuestion,
-} = chapterSlice.actions;
+export const fetchChapters = createAsyncThunk(
+  "chapters/fetchChapters",
+  async (
+    { classId, subjectId }: { classId: string; subjectId: string },
+    { rejectWithValue },
+  ) => {
+    try {
+      const apiService = ApiService.getInstance();
+      const response = await apiService.getChapters(classId, subjectId);
+
+      return response; // Return empty array if null
+    } catch (error: any) {
+      return rejectWithValue(error.message); // Reject with error message
+    }
+  },
+);
+
+export const { createChapter, removeChapter, updateChapter } =
+  chapterSlice.actions;
 
 export default chapterSlice.reducer;

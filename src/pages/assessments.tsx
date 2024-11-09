@@ -33,7 +33,7 @@ const Assessments = (_props: Props) => {
       {hasAssessments && (
         <div className="flex justify-between">
           <h3 className="text-xl font-bold">{AppTexts.testsHeading}</h3>
-          <Button color="primary" size="sm">
+          <Button color="primary" size="sm" onClick={handleCreateTestClick}>
             {AppTexts.createTest}
           </Button>
         </div>
@@ -41,7 +41,7 @@ const Assessments = (_props: Props) => {
       <div className="flex-grow p-5">
         {assessmentInfo.loading && (
           <Spinner
-            className="w-full m-2"
+            className="w-full m-2 mt-auto mb-auto"
             color="primary"
             label={AppTexts.loadingText}
             labelColor="primary"

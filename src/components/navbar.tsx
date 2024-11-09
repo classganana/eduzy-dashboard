@@ -30,7 +30,7 @@ export default function HeaderNavBar() {
   const menuItems = [
     {
       label: AppTexts.navbarTestsTexts,
-      href: Constants.routes.assessments,
+      href: Constants.routes.tests,
     },
     {
       label: AppTexts.navbarReportsText,
