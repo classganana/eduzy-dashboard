@@ -6,7 +6,6 @@ export const AppTexts = {
 
   correctQuestion: "Correct",
   incorrectQuestion: "Incorrect",
-  preview: "Preview",
   previewQuestionsHeading: "Questions Preview",
 
   goodMorningText: "Good Morning",
@@ -30,4 +29,21 @@ export const AppTexts = {
   noTestsCardTitle: "Your students are waiting for a challenge! 😉",
   noTestsCardDescription:
     "Tests are a great way to assess your students understanding of chapters. Send one now.",
+
+  /* Create Assessments */
+  noChaptersCardTitle: "Oops! No Chapters Found 😕📚",
+  noChaptersCardDescription:
+    "It seems there are no chapters available for this class and subject right now.",
+  createTestHeading: "Create Test",
+  selectChaptersHeading: "Select Chapters",
+  createTestInfoMessage:
+    "A total of 50 questions across chapters will be sent out to students.",
+  previewButton: "Preview",
+  sendTestButton: "Send Test",
+  sendTestModalTitle: "By when do you want the assessment submitted?",
+  Tomorrow: "Tomorrow",
+  in2Days: "In 2 Days",
+  in3Days: "In 3 Days",
+  in4Days: "In 4 Days",
+  in5Days: "In 5 Days",
 };
