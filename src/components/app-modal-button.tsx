@@ -5,6 +5,7 @@ import {
   ModalContent,
   ModalFooter,
   ModalHeader,
+  ModalProps,
   useDisclosure,
 } from "@nextui-org/react";
 import React from "react";
@@ -15,6 +16,7 @@ type Props = {
   triggerButton: AppButtonProps;
   actionButton?: AppButtonProps;
   closeButton?: AppButtonProps;
+  modalConfig?: Partial<ModalProps>;
   backdrop?: "blur" | "opaque" | "transparent";
   body?: React.ReactNode;
   header?: React.ReactNode;
@@ -33,9 +35,10 @@ export default function AppModal({
   triggerButton,
   actionButton,
   closeButton,
+  modalConfig,
   onCloseCallback,
   onOpenCallback,
-}: Props) {
+}: Readonly<Props>) {
   const { isOpen, onOpen, onClose } = useDisclosure({
     isOpen: open,
     onClose: onCloseCallback,
@@ -59,7 +62,12 @@ export default function AppModal({
           {triggerButton.label}
         </Button>
       </div>
-      <Modal backdrop={backdrop} isOpen={isOpen} onClose={onClose}>
+      <Modal
+        backdrop={backdrop}
+        isOpen={isOpen}
+        onClose={onClose}
+        {...modalConfig}
+      >
         <ModalContent>
           {(onClose) => (
             <>

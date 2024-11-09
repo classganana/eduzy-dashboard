@@ -34,8 +34,9 @@ export const applicationRouter = createBrowserRouter([
             element: <Home />,
           },
           {
-            path: Constants.routes.assessments,
+            path: Constants.routes.tests,
             element: <Assessments />,
+            children: [],
           },
           {
             path: Constants.routes.reports,

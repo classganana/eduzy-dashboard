@@ -1,8 +1,9 @@
 import React, { useRef, useState } from "react";
 
+import { ProfileDetailsProps } from "./Profiledetails.interface";
+
 import editIcon from "@/assets/pencil.png";
 import EditProfile from "@/pages/editProfile"; // Import the EditProfile component
-import { ProfileDetailsProps } from "./Profiledetails.interface";
 
 const ProfileDetails: React.FC<ProfileDetailsProps> = ({
   profileData,
