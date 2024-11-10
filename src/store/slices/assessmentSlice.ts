@@ -2,6 +2,7 @@ import {
   ActionReducerMapBuilder,
   createAsyncThunk,
   createSlice,
+  PayloadAction,
 } from "@reduxjs/toolkit";
 
 import { ApiService } from "@/lib/services/api-service";
@@ -21,7 +22,9 @@ const assessmentSlice = createSlice({
   name: "assessments",
   initialState: assessments,
   reducers: {
-    createAssessment() {},
+    addAssessment(state, action: PayloadAction<Assessment>) {
+      state.data.push(action.payload);
+    },
     updateAssessment() {},
     removeAssessment() {},
   },
@@ -53,9 +56,17 @@ export const fetchAssessments = createAsyncThunk(
       return rejectWithValue(error.message); // Reject with error message
     }
   },
+  {
+    condition: (arg, { getState }) => {
+      const state = getState() as any;
+
+      // Prevent API call if list is already populated
+      return state.assessments.data.length === 0;
+    },
+  },
 );
 
-export const { createAssessment, removeAssessment, updateAssessment } =
+export const { removeAssessment, updateAssessment, addAssessment } =
   assessmentSlice.actions;
 
 export default assessmentSlice.reducer;

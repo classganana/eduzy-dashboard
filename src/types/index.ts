@@ -55,7 +55,7 @@ export interface Assessment {
     userId: string;
     data: string;
   };
-  updated: {
+  updated?: {
     userId: string;
     data: string;
   };

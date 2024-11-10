@@ -8,10 +8,13 @@ import { InfoIcon, LeftArrow, NoDataIcon } from "@/components/icons";
 import PlaceholderCard from "@/components/placeholder-card";
 import PreviewChapterQuestionsModalbutton from "@/components/preview-chapter-questions-modal-button";
 import SendTestModalButton from "@/components/send-test-modal-button";
+import { ApiService } from "@/lib/services/api-service";
+import { Constants } from "@/lib/utils/constants";
 import { useAppDispatch, useAppSelector } from "@/lib/utils/hooks";
 import { AppTexts } from "@/lib/utils/texts";
+import { addAssessment } from "@/store/slices/assessmentSlice";
 import { fetchChapters } from "@/store/slices/chaptersSlice";
-import { Chapter } from "@/types";
+import { Chapter, Question } from "@/types";
 
 type Props = {};
 
@@ -19,6 +22,7 @@ const CreateTest = (_props: Props) => {
   const chaptersInfo = useAppSelector((state) => state.chapters);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const [isCreatingTest, setIsCreatingTest] = useState(false);
 
   useEffect(() => {
     /* Initialize the chapters */
@@ -38,7 +42,29 @@ const CreateTest = (_props: Props) => {
     }
   };
 
-  const createTestHandler = () => {};
+  const createTestHandler = async ({ endDate }: { endDate: string }) => {
+    try {
+      const response = await ApiService.getInstance().createAssessment({
+        assessmentName: AppTexts.testNameDefault + Date.now(),
+        startDate: new Date().toISOString(),
+        endDate: endDate,
+        classId: "1",
+        subjectId: "1",
+        chapters: selectedChapters.map((chapter) => ({
+          chapterId: chapter.id,
+          questions: chapter.questions as Question[],
+        })),
+      });
+
+      if (response?.assessmentId) {
+        dispatch(addAssessment(response));
+      }
+      setIsCreatingTest(false);
+      navigate(Constants.routes.tests);
+    } catch (error) {
+      alert("Something went wrong");
+    }
+  };
 
   return (
     <div className="flex-grow flex flex-col gap-4 px-3">
@@ -70,9 +96,9 @@ const CreateTest = (_props: Props) => {
           <SendTestModalButton submitCallback={createTestHandler} />
         </div>
       </div>
-      <AppLoader loading={chaptersInfo.loading} />
+      <AppLoader loading={chaptersInfo.loading || isCreatingTest} />
 
-      {!chaptersInfo.loading && !hasChapters && (
+      {!chaptersInfo.loading && !isCreatingTest && !hasChapters && (
         <PlaceholderCard
           description={AppTexts.noChaptersCardDescription}
           icon={<NoDataIcon size={"20em"} />}
@@ -80,7 +106,7 @@ const CreateTest = (_props: Props) => {
         />
       )}
 
-      {hasChapters && !chaptersInfo.loading && (
+      {hasChapters && !chaptersInfo.loading && !isCreatingTest && (
         <div className="w-full flex flex-col gap-4">
           <h4 className="px-6 font-bold">{AppTexts.selectChaptersHeading}</h4>
           <div className="flex flex-wrap gap-4 justify-center">

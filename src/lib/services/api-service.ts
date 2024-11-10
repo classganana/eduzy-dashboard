@@ -231,10 +231,20 @@ export class ApiService {
     };
   }
 
-  async createAssessment(assessment: CreateAsessmentRequest) {
+  async createAssessment(
+    assessment: CreateAsessmentRequest,
+  ): Promise<Assessment> {
     //const response = await this.dashboardFetch()
     //access token
-    return assessment;
+    return {
+      ...assessment,
+      assessmentId: "550e8400-e29b-41d4-a716391",
+      status: "0/10 completed.",
+      created: {
+        userId: "2112a01-b37120-5ed12459-1283",
+        data: "2024-10-31T01:30:00.000-05:00",
+      },
+    };
   }
 
   async getAssessments(): Promise<Assessment[] | null> {

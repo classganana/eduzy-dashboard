@@ -1,4 +1,6 @@
 export const AppTexts = {
+  testNameDefault: "Test",
+
   navbarTestsTexts: "Tests",
   navbarReportsText: "Reports",
   closeMenuAriaLabel: "Close menu",

@@ -1,4 +1,5 @@
 import { Button } from "@nextui-org/react";
+import { useState } from "react";
 
 import AppModal from "./app-modal-button";
 
@@ -31,15 +32,18 @@ const sendTestEndDateButtons: AppButtonProps[] = [
     payload: 5,
   },
 ];
+
 const SendTestModalButton = ({ submitCallback }: Props) => {
+  const [isModalOpened, setIsModalOpened] = useState(false);
+
   const handleEndDateButtonClick = (endsIn: number) => {
     /* endsIn days to date conversion */
     const endDate = new Date();
 
     endDate.setHours(endDate.getHours() + endsIn * 24);
-    alert(endDate.toString());
 
     submitCallback({ endDate: endDate.toISOString() });
+    setIsModalOpened(false);
   };
 
   return (
@@ -63,11 +67,14 @@ const SendTestModalButton = ({ submitCallback }: Props) => {
       modalConfig={{
         size: "lg",
       }}
+      open={isModalOpened}
       triggerButton={{
         color: "primary",
         label: AppTexts.sendTestButton,
         size: "sm",
       }}
+      onCloseCallback={() => setIsModalOpened(false)}
+      onOpenCallback={() => setIsModalOpened(true)}
     />
   );
 };
