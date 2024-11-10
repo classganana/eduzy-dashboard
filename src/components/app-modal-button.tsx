@@ -67,6 +67,7 @@ export default function AppModal({
         isOpen={isOpen}
         onClose={onClose}
         {...modalConfig}
+        scrollBehavior="inside"
       >
         <ModalContent>
           {(onClose) => (

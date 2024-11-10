@@ -1,14 +1,17 @@
-import { Button, Spinner } from "@nextui-org/react";
-import { useEffect } from "react";
+import { Button } from "@nextui-org/react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+import AppLoader from "@/components/app-loader";
 import ChapterCard from "@/components/chapterCard";
 import { InfoIcon, LeftArrow, NoDataIcon } from "@/components/icons";
 import PlaceholderCard from "@/components/placeholder-card";
-import SendTestModalButton from "@/components/send-test-modal";
+import PreviewChapterQuestionsModalbutton from "@/components/preview-chapter-questions-modal-button";
+import SendTestModalButton from "@/components/send-test-modal-button";
 import { useAppDispatch, useAppSelector } from "@/lib/utils/hooks";
 import { AppTexts } from "@/lib/utils/texts";
 import { fetchChapters } from "@/store/slices/chaptersSlice";
+import { Chapter } from "@/types";
 
 type Props = {};
 
@@ -26,12 +29,21 @@ const CreateTest = (_props: Props) => {
       ? chaptersInfo.data.chapters?.length !== 0
       : false;
 
+  const [selectedChapters, setSelectedChapters] = useState<Chapter[]>([]);
+  const handleChapterCardSelection = (selected: boolean, chapter: Chapter) => {
+    if (selected) {
+      setSelectedChapters([...selectedChapters, chapter]);
+    } else {
+      setSelectedChapters(selectedChapters.filter((c) => c.id !== chapter.id));
+    }
+  };
+
   const createTestHandler = () => {};
 
   return (
-    <div className="flex-grow flex flex-col gap-4 px-8">
-      <div className="flex justify-between items-center">
-        <div className="flex">
+    <div className="flex-grow flex flex-col gap-4 px-3">
+      <div className="flex flex-wrap gap-4 items-center sm:justify-between">
+        <div className="flex justify-self-start">
           <Button
             className="mx-2"
             isIconOnly={true}
@@ -44,26 +56,21 @@ const CreateTest = (_props: Props) => {
           <div>
             <h3 className="text-xl font-bold">{AppTexts.createTestHeading}</h3>
             <p className="flex font-light text-xs items-center gap-1">
-              <InfoIcon size={"1.2em"} /> {AppTexts.createTestInfoMessage}
+              <InfoIcon className="w-10 h-10 sm:w-5 sm:h-5" />{" "}
+              {AppTexts.createTestInfoMessage}
             </p>
           </div>
         </div>
-        <div className="flex gap-2 items-center">
-          <Button color="secondary" size="sm" variant="ghost">
-            {AppTexts.previewButton}
-          </Button>
+        <div className="flex gap-2 items-center flex-grow justify-end">
+          {selectedChapters.length}
+          <PreviewChapterQuestionsModalbutton
+            chapterIds={selectedChapters.map((chapter) => chapter.id)}
+            disabled={selectedChapters.length === 0}
+          />
           <SendTestModalButton submitCallback={createTestHandler} />
         </div>
       </div>
-      {chaptersInfo.loading && (
-        <Spinner
-          className="w-full m-2 mt-auto mb-auto"
-          color="primary"
-          label={AppTexts.loadingText}
-          labelColor="primary"
-          size="lg"
-        />
-      )}
+      <AppLoader loading={chaptersInfo.loading} />
 
       {!chaptersInfo.loading && !hasChapters && (
         <PlaceholderCard
@@ -78,7 +85,13 @@ const CreateTest = (_props: Props) => {
           <h4 className="px-6 font-bold">{AppTexts.selectChaptersHeading}</h4>
           <div className="flex flex-wrap gap-4 justify-center">
             {chaptersInfo.data?.chapters.map((chapter) => {
-              return <ChapterCard key={chapter.id} chapter={chapter} />;
+              return (
+                <ChapterCard
+                  key={chapter.id}
+                  chapter={chapter}
+                  onSelectionChange={handleChapterCardSelection}
+                />
+              );
             })}
           </div>
         </div>

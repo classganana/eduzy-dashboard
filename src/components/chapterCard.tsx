@@ -7,7 +7,7 @@ import { Chapter } from "@/types";
 type Props = {
   chapter: Chapter;
   isSelectable?: boolean; // New prop to determine if the card is selectable
-  onSelectionChange?: (selected: boolean) => void;
+  onSelectionChange?: (selected: boolean, chapter: Chapter) => void;
 };
 
 const ChapterCard = ({
@@ -17,15 +17,15 @@ const ChapterCard = ({
 }: Props) => {
   const [isSelected, setIsSelected] = useState(false);
 
-  const toggleCheckbox = () => {
-    setIsSelected(!isSelected);
+  const toggleCheckbox = (selected?: boolean) => {
+    setIsSelected(selected ?? !isSelected);
     if (onSelectionChange) {
-      onSelectionChange(!isSelected);
+      onSelectionChange(selected ?? !isSelected, chapter);
     }
   };
 
   const handleCheckboxChange = (selected: boolean) => {
-    setIsSelected(selected);
+    toggleCheckbox(selected);
   };
 
   const chapterCardContent = (
@@ -44,8 +44,10 @@ const ChapterCard = ({
         { "cursor-pointer": isSelectable },
         { "border-primary": isSelected && isSelectable },
       )}
-      onClick={isSelectable ? toggleCheckbox : () => {}}
-      onKeyDown={isSelectable ? toggleCheckbox : () => {}}
+      onClick={isSelectable ? () => toggleCheckbox() : () => {}}
+      onKeyDown={
+        isSelectable ? (e) => e.key === "Enter" && toggleCheckbox() : () => {}
+      }
     >
       {isSelectable ? (
         <Checkbox

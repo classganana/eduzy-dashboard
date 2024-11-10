@@ -1,6 +1,7 @@
 import {
   Assessment,
   Chapter,
+  ChaptersBasedQuestionsResponse,
   CreateAsessmentRequest,
   UserLoginResponse,
 } from "@/types";
@@ -138,46 +139,96 @@ export class ApiService {
     };
   }
 
-  async getQuestions(_classId: string, _subjectId: string, _chapterId: string) {
+  async getQuestions(
+    _classId: string,
+    _subjectId: string,
+    _chapterIds: string[],
+  ): Promise<ChaptersBasedQuestionsResponse> {
     // accesstoken
     // const response = await this.dashboardFetch()
     // sample data
-    return [
-      {
-        id: "q1",
-        question: "What is the capital of India?",
-        options: [
-          {
-            option: "Delhi",
-            id: "o1",
-          },
-          {
-            option: "Mumbai",
-            id: "o2",
-          },
-        ],
-        answer: {
-          optionIds: ["o1", "o2"],
+    return {
+      chapters: [
+        {
+          chapterId: "c1",
+          questions: [
+            {
+              id: "q1",
+              question: "What is the capital of India?",
+              options: [
+                {
+                  option: "Delhi",
+                  id: "o1",
+                },
+                {
+                  option: "Mumbai",
+                  id: "o2",
+                },
+              ],
+              answer: {
+                optionIds: ["o1", "o2"],
+              },
+            },
+            {
+              id: "q2",
+              question: "What is the capital of India?",
+              options: [
+                {
+                  option: "Delhi",
+                  id: "o1",
+                },
+                {
+                  option: "Mumbai",
+                  id: "o2",
+                },
+              ],
+              answer: {
+                optionIds: ["o1"],
+              },
+            },
+          ],
         },
-      },
-      {
-        id: "q2",
-        question: "What is the capital of India?",
-        options: [
-          {
-            option: "Delhi",
-            id: "o1",
-          },
-          {
-            option: "Mumbai",
-            id: "o2",
-          },
-        ],
-        answer: {
-          optionIds: ["o1"],
+        {
+          chapterId: "c2",
+          questions: [
+            {
+              id: "q21",
+              question: "What is the capital of India?",
+              options: [
+                {
+                  option: "Delhi",
+                  id: "o1",
+                },
+                {
+                  option: "Mumbai",
+                  id: "o2",
+                },
+              ],
+              answer: {
+                optionIds: ["o1", "o2"],
+              },
+            },
+            {
+              id: "q22",
+              question: "What is the capital of India?",
+              options: [
+                {
+                  option: "Delhi",
+                  id: "o1",
+                },
+                {
+                  option: "Mumbai",
+                  id: "o2",
+                },
+              ],
+              answer: {
+                optionIds: ["o1"],
+              },
+            },
+          ],
         },
-      },
-    ];
+      ],
+    };
   }
 
   async createAssessment(assessment: CreateAsessmentRequest) {

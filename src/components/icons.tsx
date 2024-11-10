@@ -2365,12 +2365,14 @@ export const LeftArrow: React.FC<IconSvgProps> = ({
 };
 
 export const InfoIcon: React.FC<IconSvgProps> = ({
-  size = "2rem",
+  size = undefined,
   width = size,
+  className = "",
   height = size,
 }) => {
   return (
     <svg
+      className={className}
       fill="none"
       height={height}
       stroke="currentColor"

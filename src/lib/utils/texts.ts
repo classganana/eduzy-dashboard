@@ -46,4 +46,7 @@ export const AppTexts = {
   in3Days: "In 3 Days",
   in4Days: "In 4 Days",
   in5Days: "In 5 Days",
+  noQuestionsCardTitle: "Oops! No Questions found for this chapter 😕📚",
+  noQuestionsCardDescription:
+    "It seems there are no questions available for this chapter right now.",
 };

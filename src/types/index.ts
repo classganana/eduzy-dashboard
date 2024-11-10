@@ -21,11 +21,18 @@ export interface Question {
   };
 }
 
+export interface ChaptersBasedQuestionsResponse {
+  chapters: {
+    chapterId: string;
+    questions: Question[];
+  }[];
+}
+
 export interface Chapter {
-  schoolId: string;
-  classId: string;
-  boardId: string;
-  subjectId: string;
+  // schoolId: string;
+  // classId: string;
+  // boardId: string;
+  // subjectId: string;
 
   id: string;
   name: string;
@@ -82,5 +89,5 @@ export interface Chapters {
   subjectId: string;
   schoolId: string;
   boardId: string;
-  chapters: Omit<Chapter, "questions">[];
+  chapters: Chapter[];
 }
