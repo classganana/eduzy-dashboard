@@ -57,7 +57,7 @@ export const fetchAssessments = createAsyncThunk(
     }
   },
   {
-    condition: (arg, { getState }) => {
+    condition: (_arg, { getState }) => {
       const state = getState() as any;
 
       // Prevent API call if list is already populated

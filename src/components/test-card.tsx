@@ -7,7 +7,7 @@ import { Assessment } from "@/types";
 
 type Props = {};
 
-const TestCard = (props: Props) => {
+const TestCard = (_props: Props) => {
   const assessmentInfo = useAppSelector((state) => state.assessments);
 
   return (
