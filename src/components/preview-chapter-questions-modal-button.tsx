@@ -6,9 +6,9 @@ import { NoDataIcon } from "./icons";
 import PlaceholderCard from "./placeholder-card";
 import QuestionComponent from "./question-component";
 
-import { fetchQuestions, getChaptersByIds } from "@/store/slices/chaptersSlice";
-import { AppTexts } from "@/lib/utils/texts";
 import { useAppDispatch, useAppSelector } from "@/lib/utils/hooks";
+import { AppTexts } from "@/lib/utils/texts";
+import { fetchQuestions, getChaptersByIds } from "@/store/slices/chaptersSlice";
 
 type Props = {
   chapterIds: string[];
@@ -91,6 +91,7 @@ const PreviewChapterQuestionsModalbutton = ({
         }}
         triggerButton={{
           color: "primary",
+          variant: "ghost",
           label: AppTexts.previewButton,
           size: "sm",
           isDisabled: disabled,

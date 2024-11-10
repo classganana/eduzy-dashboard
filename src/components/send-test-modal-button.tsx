@@ -8,6 +8,7 @@ import { AppButtonProps } from "@/types";
 
 type Props = {
   submitCallback: ({ endDate }: { endDate: string }) => void;
+  disabled?: boolean;
 };
 
 const sendTestEndDateButtons: AppButtonProps[] = [
@@ -33,7 +34,7 @@ const sendTestEndDateButtons: AppButtonProps[] = [
   },
 ];
 
-const SendTestModalButton = ({ submitCallback }: Props) => {
+const SendTestModalButton = ({ submitCallback, disabled }: Props) => {
   const [isModalOpened, setIsModalOpened] = useState(false);
 
   const handleEndDateButtonClick = (endsIn: number) => {
@@ -72,6 +73,7 @@ const SendTestModalButton = ({ submitCallback }: Props) => {
         color: "primary",
         label: AppTexts.sendTestButton,
         size: "sm",
+        isDisabled: disabled,
       }}
       onCloseCallback={() => setIsModalOpened(false)}
       onOpenCallback={() => setIsModalOpened(true)}

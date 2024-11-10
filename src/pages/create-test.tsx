@@ -88,12 +88,14 @@ const CreateTest = (_props: Props) => {
           </div>
         </div>
         <div className="flex gap-2 items-center flex-grow justify-end">
-          {selectedChapters.length}
           <PreviewChapterQuestionsModalbutton
             chapterIds={selectedChapters.map((chapter) => chapter.id)}
             disabled={selectedChapters.length === 0}
           />
-          <SendTestModalButton submitCallback={createTestHandler} />
+          <SendTestModalButton
+            disabled={selectedChapters.length === 0}
+            submitCallback={createTestHandler}
+          />
         </div>
       </div>
       <AppLoader loading={chaptersInfo.loading || isCreatingTest} />
