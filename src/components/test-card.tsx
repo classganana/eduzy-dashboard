@@ -20,11 +20,11 @@ const TestCard = (props: Props) => {
               key={assessment.assessmentId}
               aria-label={assessment.assessmentName}
               title={
-                <div className="flex items-center gap-6 justify-between">
+                <div className="flex flex-wrap items-center gap-4 sm:justify-between">
                   <p className="font-bold text-lg my-2">
                     {assessment.assessmentName}
                   </p>{" "}
-                  <Chip color="secondary" size="sm">
+                  <Chip color="primary" size="sm">
                     {assessment.status}
                   </Chip>
                 </div>

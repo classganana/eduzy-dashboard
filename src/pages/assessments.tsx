@@ -29,7 +29,7 @@ const Assessments = (_props: Props) => {
   const hasAssessments = assessmentInfo.data?.length !== 0;
 
   return (
-    <div className="flex-grow flex flex-col gap-4 px-8">
+    <div className="flex-grow flex flex-col gap-4 px-3">
       {hasAssessments && (
         <div className="flex justify-between">
           <h3 className="text-xl font-bold">{AppTexts.testsHeading}</h3>
@@ -38,7 +38,7 @@ const Assessments = (_props: Props) => {
           </Button>
         </div>
       )}
-      <div className="flex-grow p-5">
+      <div className="flex-grow p-1">
         {assessmentInfo.loading && (
           <Spinner
             className="w-full m-2 mt-auto mb-auto"
