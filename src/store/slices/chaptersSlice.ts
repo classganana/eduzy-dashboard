@@ -1,11 +1,12 @@
 import {
   ActionReducerMapBuilder,
   createAsyncThunk,
+  createSelector,
   createSlice,
 } from "@reduxjs/toolkit";
 
 import { ApiService } from "@/lib/services/api-service";
-import { Chapters } from "@/types";
+import { Chapter, Chapters } from "@/types";
 
 interface ChapterState {
   data: Chapters | null;
@@ -24,8 +25,10 @@ const chapterSlice = createSlice({
   initialState: chapters,
   selectors: {
     getChaptersByIds(state: ChapterState, chapterIds: string[]) {
-      return state.data?.chapters.filter((chapter) =>
-        chapterIds.includes(chapter.id),
+      return (
+        state.data?.chapters.filter((chapter) =>
+          chapterIds.includes(chapter.id),
+        ) ?? []
       );
     },
   },
@@ -54,17 +57,16 @@ const chapterSlice = createSlice({
     });
     builder.addCase(fetchQuestions.fulfilled, (state, action) => {
       if (action.payload?.chapters && action.payload.chapters.length > 0) {
-        for (const [index, chapter] of (
-          state.data?.chapters ?? []
-        )?.entries()) {
-          if (
-            state.data?.chapters?.length &&
-            action.payload?.chapters?.some((c) => c.chapterId === chapter.id)
-          ) {
-            state.data.chapters[index].questions =
-              action.payload.chapters[index].questions;
+        state.data?.chapters?.forEach((chapter: Chapter, index) => {
+          const findChapter = action.payload?.chapters?.find(
+            (c) => c.chapterId === chapter.id,
+          );
+
+          if (state.data?.chapters?.length && findChapter) {
+            state.data.chapters[index].questions = findChapter.questions;
           }
-        }
+        });
+
         state.loadingQuestions = false;
       }
     });
@@ -74,15 +76,36 @@ const chapterSlice = createSlice({
   },
 });
 
+export const getChaptersByIdsSelector = createSelector(
+  (state) => {
+    return state.chapters.data?.chapters;
+  },
+  (chapters) => (ids: string[]) => {
+    if (!chapters) return [];
+
+    return ids
+      .map((id) => chapters.find((chapter: Chapter) => chapter.id === id))
+      .filter(Boolean) as Chapter[];
+  },
+);
+
 export const fetchChapters = createAsyncThunk(
   "chapters/fetchChapters",
   async (
-    { classId, subjectId }: { classId: string; subjectId: string },
+    {
+      classId,
+      subjectId,
+      boardId,
+    }: { classId: string; subjectId: string; boardId: string },
     { rejectWithValue },
   ) => {
     try {
       const apiService = ApiService.getInstance();
-      const response = await apiService.getChapters(classId, subjectId);
+      const response = await apiService.getChapters(
+        classId,
+        subjectId,
+        boardId,
+      );
 
       return response; // Return empty array if null
     } catch (error: any) {
@@ -97,10 +120,12 @@ export const fetchQuestions = createAsyncThunk(
     {
       classId,
       subjectId,
+      boardId,
       chapterIds,
     }: {
       classId: string;
       subjectId: string;
+      boardId: string;
       chapterIds: string[];
     },
     { rejectWithValue },
@@ -110,6 +135,7 @@ export const fetchQuestions = createAsyncThunk(
       const response = await apiService.getQuestions(
         classId,
         subjectId,
+        boardId,
         chapterIds,
       );
 

@@ -22,7 +22,6 @@ const LoginPage = () => {
     setError("");
     const apiService = ApiService.getInstance();
 
-    console.log(username, password);
     if (!username || !password) {
       setError("Please enter username and password");
       setIsSubmitting(false);

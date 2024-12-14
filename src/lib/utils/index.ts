@@ -57,3 +57,18 @@ export const greetingMessageBasedOnTime = () => {
     return AppTexts.goodNightText;
   }
 };
+
+export const replaceVarsInstr = (
+  input: string,
+  inpObj: Record<string, any>,
+) => {
+  let output = input;
+
+  for (const key in inpObj) {
+    const regex = new RegExp(`\{${key}\}`, "g");
+
+    output = output.replace(regex, inpObj[key]);
+  }
+
+  return output;
+};

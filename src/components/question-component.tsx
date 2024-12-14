@@ -19,7 +19,7 @@ function QuestionComponent({ question: questionData, index }: Props) {
         <div className="grid grid-cols-12 gap-3">
           {options.map((val, i) => (
             <div
-              key={val.id}
+              key={`Question${questionData.id}Option${i}`}
               className={`col-span-full min-[481px]:col-span-6`}
             >
               <div

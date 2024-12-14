@@ -52,14 +52,15 @@ const ChapterCard = ({
       {isSelectable ? (
         <Checkbox
           aria-label={chapter.name || chapter.id}
-          className="flex flex-row-reverse items-start"
+          className="flex flex-row-reverse items-start w- max-w-full"
           classNames={{
             base: "mr-2",
+            label: "w-full",
           }}
           isSelected={isSelected}
           onValueChange={handleCheckboxChange}
         >
-          {chapterCardContent}{" "}
+          <div className="flex-1">{chapterCardContent} </div>
         </Checkbox>
       ) : (
         chapterCardContent

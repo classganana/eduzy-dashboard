@@ -37,14 +37,15 @@ const PreviewChapterQuestionsModalbutton = ({
   };
 
   useEffect(() => {
-    if (!isModalOpened && filteredChapters?.length !== 0) {
+    if (!isModalOpened && filteredChapters?.length == 0) {
       return;
     }
     /* Initialize the chapters */
     dispatch(
       fetchQuestions({
-        classId: "1",
-        subjectId: "1",
+        classId: "6",
+        subjectId: "Mathematics",
+        boardId: "CBSE",
         chapterIds: chapterIds,
       }),
     );

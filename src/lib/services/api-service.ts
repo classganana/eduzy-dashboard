@@ -1,8 +1,11 @@
+import { getTokenFromLocalStorage, replaceVarsInstr } from "../utils";
+
 import {
   Assessment,
-  Chapter,
+  Chapters,
   ChaptersBasedQuestionsResponse,
   CreateAsessmentRequest,
+  Question,
   UserLoginResponse,
 } from "@/types";
 
@@ -19,7 +22,15 @@ export class ApiService {
   }
 
   public async dashboardFetch(input: RequestInfo | URL, init?: RequestInit) {
-    const response = await fetch(input, init);
+    const tokenInfo = getTokenFromLocalStorage();
+    const response = await fetch(input, {
+      ...init,
+      headers: {
+        ...init?.headers,
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${tokenInfo?.accessToken}`,
+      },
+    });
 
     if (response.headers.get("content-type")?.includes("application/json")) {
       return response.json();
@@ -56,195 +67,143 @@ export class ApiService {
   }
 
   async getChapters(
-    _classId: string,
-    _subjectId: string,
-  ): Promise<{
-    classId: string;
-    subjectId: string;
-    schoolId: string;
-    boardId: string;
-    chapters: Omit<Chapter, "questions">[];
-  } | null> {
-    // accesstoken
-    // const response = await this.dashboardFetch()
+    classId: string,
+    subjectId: string,
+    boardId: string,
+  ): Promise<Chapters> {
+    const tokenInfo = getTokenFromLocalStorage();
+    const endpoint = replaceVarsInstr(
+      import.meta.env.E_D_APP_GET_CHAPTERS_ENDPOINT,
+      {
+        classId,
+        subjectId,
+        boardId,
+      },
+    );
 
-    // sample data
+    let response = (await this.dashboardFetch(endpoint)) || [];
+
+    /* Due to bad existing backend schemas */
+    response = response[0]?.chapters || [];
+
     return {
-      classId: _classId,
-      subjectId: _subjectId,
-      schoolId: "asdasdasdasda",
-      boardId: "CBSE",
-      chapters: [
-        {
-          id: "c1",
-          name: "Chapter 1",
-          description:
-            "lorem ipsum dolor sit amet cons ectetur adipiscing elit",
-        },
-        {
-          id: "c2",
-          name: "Chapter 2",
-          description:
-            "lorem ipsum dolor sit amet cons ectetur adipiscing elit",
-        },
-        {
-          id: "c3",
-          name: "Chapter 3",
-          description:
-            "lorem ipsum dolor sit amet cons ectetur adipiscing elit",
-        },
-        {
-          id: "c4",
-          name: "Chapter 4",
-          description:
-            "lorem ipsum dolor sit amet cons ectetur adipiscing elit",
-        },
-        {
-          id: "c5",
-          name: "Chapter 5",
-          description:
-            "lorem ipsum dolor sit amet cons ectetur adipiscing elit",
-        },
-        {
-          id: "c6",
-          name: "Chapter 6",
-          description:
-            "lorem ipsum dolor sit amet cons ectetur adipiscing elit",
-        },
-        {
-          id: "c7",
-          name: "Chapter 7",
-          description:
-            "lorem ipsum dolor sit amet cons ectetur adipiscing elit",
-        },
-        {
-          id: "c8",
-          name: "Chapter 8",
-          description:
-            "lorem ipsum dolor sit amet cons ectetur adipiscing elit",
-        },
-        {
-          id: "c9",
-          name: "Chapter 9",
-          description:
-            "lorem ipsum dolor sit amet cons ectetur adipiscing elit",
-        },
-        {
-          id: "c10",
-          name: "Chapter 10",
-          description:
-            "lorem ipsum dolor sit amet cons ectetur adipiscing elit",
-        },
-      ],
+      classId,
+      subjectId,
+      boardId,
+      schoolId: tokenInfo?.schoolId || "",
+      chapters: response.map((chapter: string) => {
+        const chapterTitle = chapter.split(" ").at(-1);
+        const chapterNumText = chapter.split(" ").slice(0, 2).join(" ");
+
+        return {
+          id: chapter,
+          name: chapterNumText,
+          description: chapterTitle,
+        };
+      }),
+    };
+  }
+
+  async getQuestionsBasedOnChapter(
+    classId: string,
+    subjectId: string,
+    boardId: string,
+    chapterId: string,
+  ): Promise<{
+    chapterId: string;
+    questions: Question[];
+  }> {
+    const endpoint = replaceVarsInstr(
+      import.meta.env.E_D_APP_GET_CHAPTER_QUESTIONS_ENDPOINT,
+      {
+        classId,
+        subjectId,
+        boardId,
+        chapterId,
+      },
+    );
+
+    let response = (await this.dashboardFetch(endpoint)) || [];
+
+    return {
+      chapterId,
+      questions: response.map((question: any) => {
+        return {
+          id: question.mcqId,
+          question: question.question,
+          options: question.options.map((option: any) => {
+            return {
+              id: option,
+              option: option,
+            };
+          }),
+          answer: {
+            optionIds: [],
+            value: "",
+          },
+        };
+      }),
     };
   }
 
   async getQuestions(
-    _classId: string,
-    _subjectId: string,
-    _chapterIds: string[],
+    classId: string,
+    subjectId: string,
+    boardId: string,
+    chapterIds: string[],
   ): Promise<ChaptersBasedQuestionsResponse> {
-    // accesstoken
-    // const response = await this.dashboardFetch()
-    // sample data
+    const getQuestionsBasedOnChapterPromises = chapterIds.map((chapterId) =>
+      this.getQuestionsBasedOnChapter(classId, subjectId, boardId, chapterId),
+    );
+    const questionsBasedOnChapters = await Promise.all(
+      getQuestionsBasedOnChapterPromises,
+    );
+
     return {
-      chapters: [
-        {
-          chapterId: "c1",
-          questions: [
-            {
-              id: "q1",
-              question: "What is the capital of India?",
-              options: [
-                {
-                  option: "Delhi",
-                  id: "o1",
-                },
-                {
-                  option: "Mumbai",
-                  id: "o2",
-                },
-              ],
-              answer: {
-                optionIds: ["o1", "o2"],
-              },
-            },
-            {
-              id: "q2",
-              question: "What is the capital of India?",
-              options: [
-                {
-                  option: "Delhi",
-                  id: "o1",
-                },
-                {
-                  option: "Mumbai",
-                  id: "o2",
-                },
-              ],
-              answer: {
-                optionIds: ["o1"],
-              },
-            },
-          ],
-        },
-        {
-          chapterId: "c2",
-          questions: [
-            {
-              id: "q21",
-              question: "What is the capital of India?",
-              options: [
-                {
-                  option: "Delhi",
-                  id: "o1",
-                },
-                {
-                  option: "Mumbai",
-                  id: "o2",
-                },
-              ],
-              answer: {
-                optionIds: ["o1", "o2"],
-              },
-            },
-            {
-              id: "q22",
-              question: "What is the capital of India?",
-              options: [
-                {
-                  option: "Delhi",
-                  id: "o1",
-                },
-                {
-                  option: "Mumbai",
-                  id: "o2",
-                },
-              ],
-              answer: {
-                optionIds: ["o1"],
-              },
-            },
-          ],
-        },
-      ],
+      chapters: questionsBasedOnChapters,
     };
   }
 
   async createAssessment(
     assessment: CreateAsessmentRequest,
   ): Promise<Assessment> {
-    //const response = await this.dashboardFetch()
-    //access token
-    return {
-      ...assessment,
-      assessmentId: "550e8400-e29b-41d4-a716391",
-      status: "0/10 completed.",
-      created: {
-        userId: "2112a01-b37120-5ed12459-1283",
-        data: "2024-10-31T01:30:00.000-05:00",
+    const existingQuestions = assessment.chapters
+      .map((chapter) => chapter.questions)
+      .filter(Boolean)
+      .flat();
+
+    const questions =
+      existingQuestions.length > 0
+        ? existingQuestions
+        : (
+            await this.getQuestions(
+              assessment.classId,
+              assessment.subjectId,
+              "CBSE",
+              assessment.chapters.map((chapter) => chapter.chapterId),
+            )
+          ).chapters
+            .map((chapter) => chapter.questions)
+            .flat();
+
+    const response = await this.dashboardFetch(
+      import.meta.env.E_D_APP_CREATE_ASSESSMENTS_ENDPOINT,
+      {
+        body: JSON.stringify({
+          assessmentName: assessment.assessmentName,
+          boardId: "CBSE",
+          className: assessment.classId,
+          subject: assessment.subjectId,
+          chapters: assessment.chapters.map((chapter) => chapter.chapterId),
+          questionIds: questions.map((question) => question.id),
+          startTime: assessment.startDate,
+          endTime: assessment.endDate,
+        }),
+        method: "POST",
       },
-    };
+    );
+
+    return response;
   }
 
   async getAssessments(): Promise<Assessment[] | null> {

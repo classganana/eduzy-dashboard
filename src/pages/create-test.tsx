@@ -13,27 +13,42 @@ import { Constants } from "@/lib/utils/constants";
 import { useAppDispatch, useAppSelector } from "@/lib/utils/hooks";
 import { AppTexts } from "@/lib/utils/texts";
 import { addAssessment } from "@/store/slices/assessmentSlice";
-import { fetchChapters } from "@/store/slices/chaptersSlice";
+import {
+  fetchChapters,
+  getChaptersByIdsSelector,
+} from "@/store/slices/chaptersSlice";
 import { Chapter, Question } from "@/types";
 
 type Props = {};
 
 const CreateTest = (_props: Props) => {
   const chaptersInfo = useAppSelector((state) => state.chapters);
+  const [selectedChapters, setSelectedChapters] = useState<Chapter[]>([]);
+
+  const selectedChaptersCompleteInfo = useAppSelector((state) =>
+    getChaptersByIdsSelector(state)(
+      selectedChapters.map((chapter) => chapter.id),
+    ),
+  );
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const [isCreatingTest, setIsCreatingTest] = useState(false);
 
   useEffect(() => {
     /* Initialize the chapters */
-    dispatch(fetchChapters({ classId: "1", subjectId: "1" }));
+    dispatch(
+      fetchChapters({
+        classId: "6",
+        subjectId: "Mathematics",
+        boardId: "CBSE",
+      }),
+    );
   }, []);
   const hasChapters =
     chaptersInfo.data && Object.keys(chaptersInfo.data).length > 0
       ? chaptersInfo.data.chapters?.length !== 0
       : false;
 
-  const [selectedChapters, setSelectedChapters] = useState<Chapter[]>([]);
   const handleChapterCardSelection = (selected: boolean, chapter: Chapter) => {
     if (selected) {
       setSelectedChapters([...selectedChapters, chapter]);
@@ -48,9 +63,9 @@ const CreateTest = (_props: Props) => {
         assessmentName: AppTexts.testNameDefault + Date.now(),
         startDate: new Date().toISOString(),
         endDate: endDate,
-        classId: "1",
-        subjectId: "1",
-        chapters: selectedChapters.map((chapter) => ({
+        classId: "6",
+        subjectId: "Mathematics",
+        chapters: selectedChaptersCompleteInfo.map((chapter) => ({
           chapterId: chapter.id,
           questions: chapter.questions as Question[],
         })),
@@ -62,6 +77,7 @@ const CreateTest = (_props: Props) => {
       setIsCreatingTest(false);
       navigate(Constants.routes.tests);
     } catch (error) {
+      console.error(error);
       alert("Something went wrong");
     }
   };
