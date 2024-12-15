@@ -51,4 +51,9 @@ export const AppTexts = {
   noQuestionsCardTitle: "Oops! No Questions found for this chapter 😕📚",
   noQuestionsCardDescription:
     "It seems there are no questions available for this chapter right now.",
+
+  // test-status.tsx
+  viewReport: "View Report",
+  avgScore: "Avg Score",
+  attempted: "Attempted",
 };
