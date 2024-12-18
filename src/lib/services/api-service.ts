@@ -1,4 +1,5 @@
 import { getTokenFromLocalStorage, replaceVarsInstr } from "../utils";
+import { AppTexts } from "../utils/texts";
 
 import {
   Assessment,
@@ -164,9 +165,7 @@ export class ApiService {
     };
   }
 
-  async createAssessment(
-    assessment: CreateAsessmentRequest,
-  ): Promise<Assessment> {
+  async createAssessment(assessment: CreateAsessmentRequest) {
     const existingQuestions = assessment.chapters
       .map((chapter) => chapter.questions)
       .filter(Boolean)
@@ -207,289 +206,36 @@ export class ApiService {
   }
 
   async getAssessments(): Promise<Assessment[] | null> {
-    // const response = await this.dashboardFetch()
-    // access token
-    // Sample respone
-    return [
-      {
-        assessmentId: "550e8400-e29b-41d4-a716221",
-        assessmentName: "Test Assessment",
-        classId: "10",
-        subjectId: "Social",
-        chapters: [
-          {
-            chapterId: "Teritories",
-            questions: [
-              {
-                id: "q1",
-                question: "What is the capital of India?",
-                options: [
-                  {
-                    option: "Delhi",
-                    id: "o1",
-                  },
-                  {
-                    option: "Mumbai",
-                    id: "o2",
-                  },
-                  {
-                    option: "Chennai",
-                    id: "o3",
-                  },
-                  {
-                    option: "Kolkata",
-                    id: "o4",
-                  },
-                ],
-                answer: {
-                  optionIds: ["o1", "o2"],
-                },
-              },
-              {
-                id: "q2",
-                question: "What is the capital of France?",
-                options: [
-                  {
-                    option: "Paris",
-                    id: "o1",
-                  },
-                  {
-                    option: "London",
-                    id: "o2",
-                  },
-                  {
-                    option: "Berlin",
-                    id: "o3",
-                  },
-                  {
-                    option: "Rome",
-                    id: "o4",
-                  },
-                ],
-                answer: {
-                  optionIds: ["o1"],
-                },
-              },
-            ],
-          },
-          {
-            chapterId: "Union Teritories",
-            questions: [
-              {
-                id: "q1",
-                question: "What is the capital of India?",
-                options: [
-                  {
-                    option: "Delhi",
-                    id: "o1",
-                  },
-                  {
-                    option: "Mumbai",
-                    id: "o2",
-                  },
-                  {
-                    option: "Chennai",
-                    id: "o3",
-                  },
-                  {
-                    option: "Kolkata",
-                    id: "o4",
-                  },
-                ],
-                answer: {
-                  optionIds: ["o1", "o2"],
-                },
-              },
-              {
-                id: "q2",
-                question: "What is the capital of France?",
-                options: [
-                  {
-                    option: "Paris",
-                    id: "o1",
-                  },
-                  {
-                    option: "London",
-                    id: "o2",
-                  },
-                  {
-                    option: "Berlin",
-                    id: "o3",
-                  },
-                  {
-                    option: "Rome",
-                    id: "o4",
-                  },
-                ],
-                answer: {
-                  optionIds: ["o1"],
-                },
-              },
-            ],
-          },
-        ],
-        status: "0/10 completed.",
-        startDate: "2024-10-31T01:30:00.000-05:00",
-        endDate: "2024-11-31T01:30:00.000-05:00",
-        created: {
-          userId: "2112a01-b37120-5ed12459-1283",
-          data: "2024-10-31T01:30:00.000-05:00",
-        },
-        updated: {
-          userId: "2112a01-b37120-5ed12459-1283",
-          data: "2024-10-31T01:30:00.000-05:00",
-        },
-      },
-      {
-        assessmentId: "550e8400-e29b-41d4-a716244",
-        assessmentName: "Test Assessment 2",
-        classId: "9",
-        subjectId: "General Knowledge",
-        status: "Assessment Completed",
-        chapters: [
-          {
-            chapterId: "Capitals of countries",
-            questions: [
-              {
-                id: "q1",
-                question: "What is the capital of India?",
-                options: [
-                  {
-                    option: "Delhi",
-                    id: "o1",
-                  },
-                  {
-                    option: "Mumbai",
-                    id: "o2",
-                  },
-                  {
-                    option: "Chennai",
-                    id: "o3",
-                  },
-                  {
-                    option: "Kolkata",
-                    id: "o4",
-                  },
-                ],
-                answer: {
-                  optionIds: ["o1", "o2"],
-                },
-              },
-              {
-                id: "q2",
-                question: "What is the capital of France?",
-                options: [
-                  {
-                    option: "Paris",
-                    id: "o1",
-                  },
-                  {
-                    option: "London",
-                    id: "o2",
-                  },
-                  {
-                    option: "Berlin",
-                    id: "o3",
-                  },
-                  {
-                    option: "Rome",
-                    id: "o4",
-                  },
-                ],
-                answer: {
-                  optionIds: ["o1"],
-                },
-              },
-            ],
-          },
-        ],
+    const response = await this.dashboardFetch(
+      import.meta.env.E_D_APP_GET_ASSESSMENTS_ENDPOINT,
+    );
 
-        startDate: "2024-10-21T01:30:00.000-05:00",
-        endDate: "2024-11-31T01:30:00.000-05:00",
-        created: {
-          userId: "2112a01-b37120-5ed12459-1283",
-          data: "2024-10-31T01:30:00.000-05:00",
-        },
-        updated: {
-          userId: "2112a01-b37120-5ed12459-1283",
-          data: "2024-10-31T01:30:00.000-05:00",
-        },
-      },
-      {
-        assessmentId: "550e8400-e29b-41d4-a716231",
-        assessmentName: "Test Assessment 3",
-        classId: "9",
-        subjectId: "General Knowledge 2",
-        status: "Assessment Expired",
-        chapters: [
-          {
-            chapterId: "Capitals of countries 2",
-            questions: [
-              {
-                id: "q1",
-                question: "What is the capital of India?",
-                options: [
-                  {
-                    option: "Delhi",
-                    id: "o1",
-                  },
-                  {
-                    option: "Mumbai",
-                    id: "o2",
-                  },
-                  {
-                    option: "Chennai",
-                    id: "o3",
-                  },
-                  {
-                    option: "Kolkata",
-                    id: "o4",
-                  },
-                ],
-                answer: {
-                  optionIds: ["o1", "o2"],
-                },
-              },
-              {
-                id: "q2",
-                question: "What is the capital of France?",
-                options: [
-                  {
-                    option: "Paris",
-                    id: "o1",
-                  },
-                  {
-                    option: "London",
-                    id: "o2",
-                  },
-                  {
-                    option: "Berlin",
-                    id: "o3",
-                  },
-                  {
-                    option: "Rome",
-                    id: "o4",
-                  },
-                ],
-                answer: {
-                  optionIds: ["o1"],
-                },
-              },
-            ],
-          },
-        ],
+    if (!response?.length) return [];
 
-        startDate: "2024-10-21T01:30:00.000-05:00",
-        endDate: "2024-11-31T01:30:00.000-05:00",
+    return response.map((assessment: any) => {
+      return {
+        assessmentId: assessment.assessmentId,
+        assessmentName: assessment.assessmentName || "Test Assessment",
+        classId: assessment.className,
+        subjectId: assessment.subject,
+        status: assessment.status || AppTexts.notStarted,
+        startDate: assessment.startTime,
+        endDate: assessment.endTime,
+        chapters: assessment.chapters.map((chapter: string) => {
+          return {
+            chapterId: chapter,
+            questions: [],
+          };
+        }),
         created: {
-          userId: "2112a01-b37120-5ed12459-1283",
-          data: "2024-10-31T01:30:00.000-05:00",
+          userId: assessment.created.id,
+          data: assessment.created.date,
         },
         updated: {
-          userId: "2112a01-b37120-5ed12459-1283",
-          data: "2024-10-31T01:30:00.000-05:00",
+          userId: assessment.lastUpdated.id,
+          data: assessment.lastUpdated.date,
         },
-      },
-    ];
+      };
+    });
   }
 }

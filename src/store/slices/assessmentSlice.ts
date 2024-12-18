@@ -56,14 +56,14 @@ export const fetchAssessments = createAsyncThunk(
       return rejectWithValue(error.message); // Reject with error message
     }
   },
-  {
-    condition: (_arg, { getState }) => {
-      const state = getState() as any;
+  // {
+  //   condition: (_arg, { getState }) => {
+  //     const state = getState() as any;
 
-      // Prevent API call if list is already populated
-      return state.assessments.data.length === 0;
-    },
-  },
+  //     // Prevent API call if list is already populated
+  //     return state.assessments.data.length === 0;
+  //   },
+  // },
 );
 
 export const { removeAssessment, updateAssessment, addAssessment } =

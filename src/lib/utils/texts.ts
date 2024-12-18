@@ -23,6 +23,9 @@ export const AppTexts = {
   startDate: "Start Date",
   endDate: "End Date",
   assessmentName: "Assessment Name",
+  notStarted: "Not Started",
+  inProgress: "In Progress",
+  completed: "Completed",
   chapters: "Chapters",
   createTest: "Create Test",
   questions: "Questions",
@@ -31,6 +34,8 @@ export const AppTexts = {
   noTestsCardTitle: "Your students are waiting for a challenge! 😉",
   noTestsCardDescription:
     "Tests are a great way to assess your students understanding of chapters. Send one now.",
+  createAssessmentSuccessMessage:
+    "Test consisting of questions from {chapters} chapters sent. ",
 
   /* Create Assessments */
   noChaptersCardTitle: "Oops! No Chapters Found 😕📚",

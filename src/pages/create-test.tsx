@@ -9,10 +9,11 @@ import PlaceholderCard from "@/components/placeholder-card";
 import PreviewChapterQuestionsModalbutton from "@/components/preview-chapter-questions-modal-button";
 import SendTestModalButton from "@/components/send-test-modal-button";
 import { ApiService } from "@/lib/services/api-service";
+import { replaceVarsInstr } from "@/lib/utils";
 import { Constants } from "@/lib/utils/constants";
 import { useAppDispatch, useAppSelector } from "@/lib/utils/hooks";
 import { AppTexts } from "@/lib/utils/texts";
-import { addAssessment } from "@/store/slices/assessmentSlice";
+import { fetchAssessments } from "@/store/slices/assessmentSlice";
 import {
   fetchChapters,
   getChaptersByIdsSelector,
@@ -71,9 +72,15 @@ const CreateTest = (_props: Props) => {
         })),
       });
 
-      if (response?.assessmentId) {
-        dispatch(addAssessment(response));
+      if (response?.insertedId) {
+        dispatch(fetchAssessments());
+        alert(
+          replaceVarsInstr(AppTexts.createAssessmentSuccessMessage, {
+            chapters: selectedChaptersCompleteInfo.length,
+          }),
+        );
       }
+
       setIsCreatingTest(false);
       navigate(Constants.routes.tests);
     } catch (error) {
