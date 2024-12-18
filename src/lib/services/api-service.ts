@@ -129,7 +129,7 @@ export class ApiService {
       chapterId,
       questions: response.map((question: any) => {
         return {
-          id: question.mcqId,
+          id: question.questionId,
           question: question.question,
           options: question.options.map((option: any) => {
             return {
@@ -192,7 +192,7 @@ export class ApiService {
         body: JSON.stringify({
           assessmentName: assessment.assessmentName,
           boardId: "CBSE",
-          className: assessment.classId,
+          className: parseInt(assessment.classId),
           subject: assessment.subjectId,
           chapters: assessment.chapters.map((chapter) => chapter.chapterId),
           questionIds: questions.map((question) => question.id),
