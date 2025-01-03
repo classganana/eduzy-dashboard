@@ -45,6 +45,12 @@ function testStatus(props: AssessmentProps) {
           <Chip
             avatar={
               <Avatar
+                classNames={{
+                  base:
+                    props.status !== AppTexts.status
+                      ? "bg-[#3050EB1A]"
+                      : "bg-[#6DBE001A]",
+                }}
                 name="JW"
                 src={
                   props.status !== AppTexts.status ? arrowCircleRight : checkone
@@ -52,11 +58,13 @@ function testStatus(props: AssessmentProps) {
               />
             }
             className={`${
-              props.status !== AppTexts.status ? "bg-blue-100" : "bg-green-100"
-            } text-gray-600`}
+              props.status !== AppTexts.status
+                ? "bg-[#3050EB1A]"
+                : "bg-[#6DBE001A]"
+            } `}
             variant="flat"
           >
-            <p className="text-gray-600">
+            <p className="text-[#626262]">
               {props.status !== AppTexts.status
                 ? "Assessment Sent"
                 : "Assessment Complete"}
@@ -70,18 +78,24 @@ function testStatus(props: AssessmentProps) {
 
       <div className="grid grid-cols-7 sm:grid-cols-3 gap-4">
         <div className="flex flex-col items-center space-y-6 max-[640px]:col-start-2 max-[640px]:col-span-2">
-          <p className="text-2xl text-blue-600">{props.avgScore}%</p>
-          <p className="text-sm text-gray-500">{AppTexts.avgScore}</p>
+          <p className="text-2xl text-[#3050EB]">{props.avgScore}%</p>
+          <p className="text-sm text-[#939393]">{AppTexts.avgScore}</p>
         </div>
         <div className="flex flex-col items-center space-y-6 max-[640px]:col-start-5 max-[640px]:col-span-2">
-          <p className="text-2xl">{props.attemptedPercentage}%</p>
-          <p className="text-sm text-gray-500">{AppTexts.attempted}</p>
+          <p className="text-2xl text-[#626262]">
+            {props.attemptedPercentage}%
+          </p>
+          <p className="text-sm text-[#939393]">{AppTexts.attempted}</p>
         </div>
         <div className="flex flex-col justify-center space-y-4 max-[640px]:col-start-[3] max-[640px]:col-span-3">
-          <Button className="bg-blue-50 text-gray-600 ">
+          <Button className="bg-blue-50 text-[#626262] ">
             {formatDate(props.assessmentDate)}
           </Button>
-          <Button color="primary" onClick={props.onViewReport}>
+          <Button
+            color="primary"
+            variant="bordered"
+            onClick={props.onViewReport}
+          >
             {AppTexts.viewReport}
           </Button>
         </div>
