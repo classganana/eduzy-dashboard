@@ -56,4 +56,5 @@ export const AppTexts = {
   viewReport: "View Report",
   avgScore: "Avg Score",
   attempted: "Attempted",
+  status: "Assessment Sent",
 };
