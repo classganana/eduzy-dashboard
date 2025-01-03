@@ -5,66 +5,83 @@ import arrowCircleRight from "../assets/arrow-circle-right.png";
 import checkone from "../assets/checkone.png";
 
 interface AssessmentProps {
-  chapterName: string;
-  avgScore: number;
-  attemptedPercentage: number;
-  notUnderstoodTopics: string;
-  assessmentDate: string;
-  status: string;
-  onViewReport: () => void;
+  assessment: string;
+  avgScore?: number;
+  attemptedPercentage?: number;
+  notUnderstoodTopics?: string;
+  assessmentDate?: string;
+  status?: string;
+  onViewReport?: () => void;
 }
+
+const formatDate = (dateString?: string): string => {
+  if (!dateString) return "N/A";
+
+  const date = new Date(dateString);
+
+  const day = date.getDate();
+  const dayWithSuffix =
+    day +
+    (day % 10 === 1 && day !== 11
+      ? "st"
+      : day % 10 === 2 && day !== 12
+        ? "nd"
+        : day % 10 === 3 && day !== 13
+          ? "rd"
+          : "th");
+
+  const month = date.toLocaleString("default", { month: "short" });
+  const year = date.getFullYear();
+
+  return `${dayWithSuffix} ${month}, ${year}`;
+};
 
 function testStatus(props: AssessmentProps) {
   return (
-    <Card className="grid grid-cols-12 break-words px-4 py-4 space-x-4 w-[100%]">
-      <div className="flex flex-col justify-between col-span-12 min-[700px]:col-span-6">
-        <p className="">
-          {props.chapterName}{" "}
-          sdflskdflns;dfkjdsfsldfjhasdklfjhladskfjasdlkfjhadlkfjhfdjasflkdssaflfhasdkhflkafhdadjhakdfdsjf;lajdf;jaldfhdajfhdjf
-          dfj sddfhd ddf adfhdalfkh df dfhald f aldhfg dhg
-        </p>
-        <div className="mb-[0.5rem] text-[#F64848] max-[700px]:my-4 flex items-center flex-wrap space-x-3">
-          <div className={`flex items-center space-x-2 mt-2 `}>
-            <Chip
-              avatar={
-                <Avatar
-                  name="JW"
-                  src={props.status != "sent" ? arrowCircleRight : checkone}
-                />
-              }
-              className={`bg-${props.status != "sent" ? "[#3050EB1A]" : "[#6DBE001A]"}`}
-              variant="flat"
-            >
-              <p className="text-[#626262]">
-                {" "}
-                {props.status != "sent"
-                  ? "Assessment Sent"
-                  : "Assessment Complete"}
-              </p>
-            </Chip>
-          </div>
-          {props.status == "sent" && <p> {props.notUnderstoodTopics} </p>}
+    <Card className="grid grid-cols-1 sm:grid-cols-2 gap-4 p-4 w-full">
+      <div className="flex flex-col justify-between">
+        <p>{props.assessment}</p>
+        <div className="text-red-500 flex flex-wrap items-center space-x-3 mt-2">
+          <Chip
+            avatar={
+              <Avatar
+                name="JW"
+                src={
+                  props.status !== AppTexts.status ? arrowCircleRight : checkone
+                }
+              />
+            }
+            className={`${
+              props.status !== AppTexts.status ? "bg-blue-100" : "bg-green-100"
+            } text-gray-600`}
+            variant="flat"
+          >
+            <p className="text-gray-600">
+              {props.status !== AppTexts.status
+                ? "Assessment Sent"
+                : "Assessment Complete"}
+            </p>
+          </Chip>
+          {props.status === AppTexts.status && (
+            <p>{props.notUnderstoodTopics}</p>
+          )}
         </div>
       </div>
-      <div className="flex flex-cols justify-between col-span-12 min-[700px]:col-span-6 max-[700px]:grid grid-cols-12 gap-y-4 -mt-1">
-        <div className="flex flex-col justify-between items-center max-[700px]:col-span-6">
-          <p className="text-2xl text-[#3050EB]">{props.avgScore}%</p>
-          <p className="mb-[0.6rem]">{AppTexts.avgScore}</p>
-        </div>
-        <div className="flex flex-col justify-between items-center max-[700px]:col-span-6">
-          <p className="text-2xl">{props.attemptedPercentage}%</p>
-          <p className="mb-[0.6rem]">{AppTexts.attempted}</p>
-        </div>
 
-        <div className="flex flex-col justify-between max-[700px]:col-span-12 max-[700px]:items-center">
-          <Button className="bg-[#3050EB0D] text-[#626262] max-[700px]:w-44">
-            {props.assessmentDate}
+      <div className="grid grid-cols-7 sm:grid-cols-3 gap-4">
+        <div className="flex flex-col items-center space-y-6 max-[640px]:col-start-2 max-[640px]:col-span-2">
+          <p className="text-2xl text-blue-600">{props.avgScore}%</p>
+          <p className="text-sm text-gray-500">{AppTexts.avgScore}</p>
+        </div>
+        <div className="flex flex-col items-center space-y-6 max-[640px]:col-start-5 max-[640px]:col-span-2">
+          <p className="text-2xl">{props.attemptedPercentage}%</p>
+          <p className="text-sm text-gray-500">{AppTexts.attempted}</p>
+        </div>
+        <div className="flex flex-col justify-center space-y-4 max-[640px]:col-start-[3] max-[640px]:col-span-3">
+          <Button className="bg-blue-50 text-gray-600 ">
+            {formatDate(props.assessmentDate)}
           </Button>
-          <Button
-            className="mt-[16px] max-[700px]:w-44"
-            color="primary"
-            onClick={props.onViewReport}
-          >
+          <Button color="primary" onClick={props.onViewReport}>
             {AppTexts.viewReport}
           </Button>
         </div>
