@@ -1,8 +1,8 @@
-import { Button, Card, Chip, Avatar } from "@nextui-org/react";
+import { Avatar, Button, Card, Chip } from "@nextui-org/react";
 
-import { AppTexts } from "../lib/utils/texts";
 import arrowCircleRight from "../assets/arrow-circle-right.png";
 import checkone from "../assets/checkone.png";
+import { AppTexts } from "../lib/utils/texts";
 
 interface AssessmentProps {
   assessment: string;
@@ -36,11 +36,11 @@ const formatDate = (dateString?: string): string => {
   return `${dayWithSuffix} ${month}, ${year}`;
 };
 
-function testStatus(props: AssessmentProps) {
+function TestStatus(props: AssessmentProps) {
   return (
-    <Card className="grid grid-cols-1 sm:grid-cols-2 gap-4 p-4 w-full">
-      <div className="flex flex-col justify-between">
-        <p>{props.assessment}</p>
+    <Card className="grid grid-cols-1 sm:grid-cols-2 gap-4 p-4 w-full justify-center">
+      <div className="flex flex-col gap-2 p-1">
+        <p className="text-lg m-1">{props.assessment}</p>
         <div className="text-red-500 flex flex-wrap items-center space-x-3 mt-2">
           <Chip
             avatar={
@@ -62,13 +62,10 @@ function testStatus(props: AssessmentProps) {
                 ? "bg-[#3050EB1A]"
                 : "bg-[#6DBE001A]"
             } `}
+            classNames={{ base: "m-1" }}
             variant="flat"
           >
-            <p className="text-[#626262]">
-              {props.status !== AppTexts.status
-                ? "Assessment Sent"
-                : "Assessment Complete"}
-            </p>
+            <p className="text-[#626262]">{props.status}</p>
           </Chip>
           {props.status === AppTexts.status && (
             <p>{props.notUnderstoodTopics}</p>
@@ -76,21 +73,21 @@ function testStatus(props: AssessmentProps) {
         </div>
       </div>
 
-      <div className="grid grid-cols-7 sm:grid-cols-3 gap-4">
-        <div className="flex flex-col items-center space-y-6 max-[640px]:col-start-2 max-[640px]:col-span-2">
+      <div className="grid grid-cols-7 sm:grid-cols-3 gap-4 items-center">
+        <div className="flex flex-col items-center max-[640px]:col-start-2 max-[640px]:col-span-2">
           <p className="text-2xl text-[#3050EB]">{props.avgScore}%</p>
           <p className="text-sm text-[#939393]">{AppTexts.avgScore}</p>
         </div>
-        <div className="flex flex-col items-center space-y-6 max-[640px]:col-start-5 max-[640px]:col-span-2">
+        <div className="flex flex-col items-center max-[640px]:col-start-5 max-[640px]:col-span-2">
           <p className="text-2xl text-[#626262]">
             {props.attemptedPercentage}%
           </p>
           <p className="text-sm text-[#939393]">{AppTexts.attempted}</p>
         </div>
-        <div className="flex flex-col justify-center space-y-4 max-[640px]:col-start-[3] max-[640px]:col-span-3">
-          <Button className="bg-blue-50 text-[#626262] ">
+        <div className="flex flex-col justify-center space-y-2 max-[640px]:col-start-[3] max-[640px]:col-span-3">
+          <div className="bg-blue-50 rounded-md p-2 text-sm text-center text-[#626262] ">
             {formatDate(props.assessmentDate)}
-          </Button>
+          </div>
           <Button
             color="primary"
             variant="bordered"
@@ -104,4 +101,4 @@ function testStatus(props: AssessmentProps) {
   );
 }
 
-export default testStatus;
+export default TestStatus;
