@@ -141,6 +141,8 @@ export const fetchQuestions = createAsyncThunk(
 
       return response;
     } catch (error: any) {
+      console.error(error);
+
       return rejectWithValue(error.message);
     }
   },

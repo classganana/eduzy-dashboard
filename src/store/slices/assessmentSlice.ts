@@ -51,8 +51,12 @@ export const fetchAssessments = createAsyncThunk(
       const apiService = ApiService.getInstance();
       const assessments = await apiService.getAssessments();
 
+      console.log(assessments);
+
       return assessments || []; // Return empty array if null
     } catch (error: any) {
+      console.error(error);
+
       return rejectWithValue(error.message); // Reject with error message
     }
   },

@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 import { FillOutBroIcon } from "@/components/icons";
 import PlaceholderCard from "@/components/placeholder-card";
-import TestCard from "@/components/test-card";
+import TestCardsList from "@/components/test-cards-list";
 import { Constants } from "@/lib/utils/constants";
 import { useAppDispatch, useAppSelector } from "@/lib/utils/hooks";
 import { AppTexts } from "@/lib/utils/texts";
@@ -26,6 +26,7 @@ const Assessments = (_props: Props) => {
     navigate(Constants.routes.createTest);
   };
 
+  console.log(assessmentInfo);
   const hasAssessments = assessmentInfo.data?.length !== 0;
 
   return (
@@ -62,7 +63,7 @@ const Assessments = (_props: Props) => {
             title={AppTexts.noTestsCardTitle}
           />
         ) : (
-          <TestCard />
+          <TestCardsList />
         )}
       </div>
     </div>

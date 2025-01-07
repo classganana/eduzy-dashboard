@@ -153,15 +153,49 @@ export class ApiService {
     boardId: string,
     chapterIds: string[],
   ): Promise<ChaptersBasedQuestionsResponse> {
-    const getQuestionsBasedOnChapterPromises = chapterIds.map((chapterId) =>
-      this.getQuestionsBasedOnChapter(classId, subjectId, boardId, chapterId),
+    // const getQuestionsBasedOnChapterPromises = chapterIds.map((chapterId) =>
+    //   this.getQuestionsBasedOnChapter(classId, subjectId, boardId, chapterId)
+    // );
+
+    const endpoint = replaceVarsInstr(
+      import.meta.env.E_D_APP_GET_CHAPTER_QUESTIONS_ENDPOINT,
+      {
+        classId,
+        subjectId,
+        boardId,
+        chapterIds: chapterIds.join(";"),
+      },
     );
-    const questionsBasedOnChapters = await Promise.all(
-      getQuestionsBasedOnChapterPromises,
-    );
+    let response = (await this.dashboardFetch(endpoint)) || [];
 
     return {
-      chapters: questionsBasedOnChapters,
+      chapters: response.map((chapter: any) => {
+        console.log(chapter);
+
+        return {
+          chapterId: chapter.chapter,
+          questions: chapter.questions.map((question: any) => {
+            return {
+              id: question.questionId,
+              question: question.question,
+              options: question.options.map((option: any) => {
+                return {
+                  id: option,
+                  option: option,
+                };
+              }),
+              answer: {
+                optionIds: [
+                  question.options.filter(
+                    (option: any) => option === question.answer,
+                  )[0],
+                ],
+                value: "",
+              },
+            };
+          }),
+        };
+      }),
     };
   }
 
@@ -211,6 +245,7 @@ export class ApiService {
     );
 
     if (!response?.length) return [];
+    console.log(response);
 
     return response.map((assessment: any) => {
       return {
@@ -221,7 +256,7 @@ export class ApiService {
         status: assessment.status || AppTexts.notStarted,
         startDate: assessment.startTime,
         endDate: assessment.endTime,
-        chapters: assessment.chapters.map((chapter: string) => {
+        chapters: assessment.chapters?.map((chapter: string) => {
           return {
             chapterId: chapter,
             questions: [],
