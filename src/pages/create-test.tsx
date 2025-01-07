@@ -60,6 +60,7 @@ const CreateTest = (_props: Props) => {
 
   const createTestHandler = async ({ endDate }: { endDate: string }) => {
     try {
+      console.log(selectedChaptersCompleteInfo);
       const response = await ApiService.getInstance().createAssessment({
         assessmentName: AppTexts.testNameDefault + Date.now(),
         startDate: new Date().toISOString(),

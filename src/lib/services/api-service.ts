@@ -170,8 +170,6 @@ export class ApiService {
 
     return {
       chapters: response.map((chapter: any) => {
-        console.log(chapter);
-
         return {
           chapterId: chapter.chapter,
           questions: chapter.questions.map((question: any) => {
@@ -200,35 +198,47 @@ export class ApiService {
   }
 
   async createAssessment(assessment: CreateAsessmentRequest) {
-    const existingQuestions = assessment.chapters
-      .map((chapter) => chapter.questions)
-      .filter(Boolean)
-      .flat();
+    const chapterQuesNeedToBeFetched: CreateAsessmentRequest["chapters"] = [];
+    const finalChapterQuestions: CreateAsessmentRequest["chapters"] = [];
 
-    const questions =
-      existingQuestions.length > 0
-        ? existingQuestions
-        : (
-            await this.getQuestions(
-              assessment.classId,
-              assessment.subjectId,
-              "CBSE",
-              assessment.chapters.map((chapter) => chapter.chapterId),
-            )
-          ).chapters
-            .map((chapter) => chapter.questions)
-            .flat();
+    for (const chapter of assessment.chapters) {
+      if (!chapter.questions?.length) {
+        chapterQuesNeedToBeFetched.push(chapter);
+      } else {
+        finalChapterQuestions.push(chapter);
+      }
+    }
+
+    const chapterQuestions = chapterQuesNeedToBeFetched?.length
+      ? await this.getQuestions(
+          assessment.classId,
+          assessment.subjectId,
+          "CBSE",
+          chapterQuesNeedToBeFetched.map((chapter) => chapter.chapterId),
+        )
+      : { chapters: [] };
+
+    chapterQuestions.chapters.forEach((chapter) => {
+      finalChapterQuestions.push(chapter);
+    });
+
+    const questions = finalChapterQuestions.map((chapter) => {
+      return {
+        chapter: chapter.chapterId,
+        questionIds:
+          chapter.questions?.map((question) => String(question.id)) || [],
+      };
+    });
 
     const response = await this.dashboardFetch(
       import.meta.env.E_D_APP_CREATE_ASSESSMENTS_ENDPOINT,
       {
         body: JSON.stringify({
           assessmentName: assessment.assessmentName,
-          boardId: "CBSE",
+          boardId: "BOARD123",
           className: parseInt(assessment.classId),
           subject: assessment.subjectId,
-          chapters: assessment.chapters.map((chapter) => chapter.chapterId),
-          questionIds: questions.map((question) => question.id),
+          questions: questions,
           startTime: assessment.startDate,
           endTime: assessment.endDate,
         }),
@@ -241,11 +251,10 @@ export class ApiService {
 
   async getAssessments(): Promise<Assessment[] | null> {
     const response = await this.dashboardFetch(
-      import.meta.env.E_D_APP_GET_ASSESSMENTS_ENDPOINT,
+      import.meta.env.E_D_APP_GET_ASSESSMENTS_ENDPOINT + "?sort=-date",
     );
 
     if (!response?.length) return [];
-    console.log(response);
 
     return response.map((assessment: any) => {
       return {
@@ -256,10 +265,14 @@ export class ApiService {
         status: assessment.status || AppTexts.notStarted,
         startDate: assessment.startTime,
         endDate: assessment.endTime,
-        chapters: assessment.chapters?.map((chapter: string) => {
+        chapters: assessment.questions?.map((question: any) => {
           return {
-            chapterId: chapter,
-            questions: [],
+            chapterId: question.chapter,
+            questions: [
+              question.questionIds.map((questionId: string) => ({
+                id: questionId,
+              })),
+            ],
           };
         }),
         created: {
