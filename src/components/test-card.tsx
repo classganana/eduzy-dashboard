@@ -1,8 +1,8 @@
 import { Avatar, Button, Card, Chip } from "@nextui-org/react";
 
-import arrowCircleRight from "../assets/arrow-circle-right.png";
-import checkone from "../assets/checkone.png";
-import { AppTexts } from "../lib/utils/texts";
+import arrowCircleRight from "@/assets/arrow-circle-right.png";
+import checkone from "@/assets/checkone.png";
+import { AppTexts } from "@/lib/utils/texts";
 
 interface AssessmentProps {
   assessment: string;
