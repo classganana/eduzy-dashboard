@@ -20,6 +20,10 @@ jobs:
 
       - name: Build application
         run: npm run build
+        env:
+          E_D_APP_LOGIN_ENDPOINT: ${{ E_D_APP_LOGIN_ENDPOINT }}
+          
+          
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
