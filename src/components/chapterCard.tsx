@@ -1,4 +1,4 @@
-import { Card, CardBody, CardHeader, Checkbox } from "@nextui-org/react";
+import { Card, CardBody, CardHeader, Checkbox } from "@heroui/react";
 import { useState } from "react";
 
 import { cn } from "@/lib/utils";

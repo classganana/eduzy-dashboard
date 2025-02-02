@@ -1,4 +1,4 @@
-import { Avatar, Button, Card, Chip } from "@nextui-org/react";
+import { Avatar, Button, Card, Chip } from "@heroui/react";
 
 import arrowCircleRight from "@/assets/arrow-circle-right.png";
 import checkone from "@/assets/checkOne.png";

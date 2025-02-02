@@ -5,7 +5,7 @@ import {
   TableColumn,
   TableHeader,
   TableRow,
-} from "@nextui-org/react";
+} from "@heroui/react";
 
 import arrow from "../../assets/arrow.png"; // Correct import from your assets folder
 

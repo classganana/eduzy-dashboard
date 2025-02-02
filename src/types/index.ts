@@ -1,4 +1,4 @@
-import { ButtonProps } from "@nextui-org/react";
+import { ButtonProps } from "@heroui/react";
 import { JwtPayload } from "jwt-decode";
 import { SVGProps } from "react";
 

@@ -1,4 +1,4 @@
-import { Button, Spinner } from "@nextui-org/react";
+import { Button, Spinner } from "@heroui/react";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 

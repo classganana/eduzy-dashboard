@@ -7,7 +7,7 @@ import {
   ModalHeader,
   ModalProps,
   useDisclosure,
-} from "@nextui-org/react";
+} from "@heroui/react";
 import React from "react";
 
 import { AppButtonProps } from "@/types";

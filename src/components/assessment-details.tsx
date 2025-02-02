@@ -1,4 +1,4 @@
-import { Card, CardHeader, Input } from "@nextui-org/react";
+import { Card, CardHeader, Input } from "@heroui/react";
 
 import { AppTexts } from "@/lib/utils/texts";
 import { Assessment } from "@/types";
