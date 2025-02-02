@@ -4,10 +4,12 @@ export class Constants {
   public static readonly routes = {
     tests: "/tests",
     createTest: "/tests/create-test",
-    reports: "/reports",
+    report: "/report",
     home: "/home",
     login: "/login",
   };
 
   public static readonly LocalStorageAccessTokenKey = "E_D_ACCESS_TOKEN";
+
+  public static readonly assessmentStatusIcons = {};
 }

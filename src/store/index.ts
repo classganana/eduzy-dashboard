@@ -2,6 +2,7 @@ import { configureStore } from "@reduxjs/toolkit";
 
 import assessmentReducer from "./slices/assessmentSlice";
 import chaptersReducer from "./slices/chaptersSlice";
+import reportReducer from "./slices/reportSlice";
 import userReducer from "./slices/userSlice";
 
 export const applicationStore = configureStore({
@@ -9,6 +10,7 @@ export const applicationStore = configureStore({
     user: userReducer,
     assessments: assessmentReducer,
     chapters: chaptersReducer,
+    report: reportReducer,
   },
 });
 

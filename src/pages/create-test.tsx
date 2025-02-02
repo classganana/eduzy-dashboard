@@ -34,17 +34,26 @@ const CreateTest = (_props: Props) => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const [isCreatingTest, setIsCreatingTest] = useState(false);
+  const assessmentFilter = useAppSelector(
+    (state) => state.assessments.currentFilter,
+  );
 
   useEffect(() => {
-    /* Initialize the chapters */
-    dispatch(
-      fetchChapters({
-        classId: "6",
-        subjectId: "Mathematics",
-        boardId: "CBSE",
-      }),
-    );
-  }, []);
+    if (
+      assessmentFilter.class &&
+      assessmentFilter.subject &&
+      assessmentFilter.board
+    ) {
+      dispatch(
+        fetchChapters({
+          classId: assessmentFilter.class,
+          subjectId: assessmentFilter.subject,
+          boardId: assessmentFilter.board,
+        }),
+      );
+    }
+  }, [assessmentFilter, dispatch]); // Ensure the effect only runs when the filter is updated
+
   const hasChapters =
     chaptersInfo.data && Object.keys(chaptersInfo.data).length > 0
       ? chaptersInfo.data.chapters?.length !== 0
@@ -60,13 +69,13 @@ const CreateTest = (_props: Props) => {
 
   const createTestHandler = async ({ endDate }: { endDate: string }) => {
     try {
-      console.log(selectedChaptersCompleteInfo);
       const response = await ApiService.getInstance().createAssessment({
         assessmentName: AppTexts.testNameDefault + Date.now(),
         startDate: new Date().toISOString(),
         endDate: endDate,
-        classId: "6",
-        subjectId: "Mathematics",
+        classId: assessmentFilter.class,
+        subjectId: assessmentFilter.subject,
+        boardId: assessmentFilter.board,
         chapters: selectedChaptersCompleteInfo.map((chapter) => ({
           chapterId: chapter.id,
           questions: chapter.questions as Question[],
@@ -91,7 +100,7 @@ const CreateTest = (_props: Props) => {
   };
 
   return (
-    <div className="flex-grow flex flex-col gap-4 px-3">
+    <div className="grow flex flex-col gap-4 px-3">
       <div className="flex flex-wrap gap-4 items-center sm:justify-between">
         <div className="flex justify-self-start">
           <Button
@@ -111,7 +120,7 @@ const CreateTest = (_props: Props) => {
             </p>
           </div>
         </div>
-        <div className="flex gap-2 items-center flex-grow justify-end">
+        <div className="flex gap-2 items-center grow justify-end">
           <PreviewChapterQuestionsModalbutton
             chapterIds={selectedChapters.map((chapter) => chapter.id)}
             disabled={selectedChapters.length === 0}

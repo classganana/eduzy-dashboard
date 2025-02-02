@@ -3,10 +3,12 @@ import { AppTexts } from "../utils/texts";
 
 import {
   Assessment,
+  AssessmentFilter,
   Chapters,
   ChaptersBasedQuestionsResponse,
   CreateAsessmentRequest,
   Question,
+  Report,
   UserLoginResponse,
 } from "@/types";
 
@@ -213,7 +215,7 @@ export class ApiService {
       ? await this.getQuestions(
           assessment.classId,
           assessment.subjectId,
-          "CBSE",
+          assessment.boardId,
           chapterQuesNeedToBeFetched.map((chapter) => chapter.chapterId),
         )
       : { chapters: [] };
@@ -249,10 +251,21 @@ export class ApiService {
     return response;
   }
 
-  async getAssessments(): Promise<Assessment[] | null> {
-    const response = await this.dashboardFetch(
-      import.meta.env.E_D_APP_GET_ASSESSMENTS_ENDPOINT + "?sort=-date",
-    );
+  async getAssessments(
+    filter?: Partial<AssessmentFilter>,
+  ): Promise<Assessment[] | null> {
+    // Construct query params from filter
+    filter = {
+      ...(filter || {}),
+      sort: filter?.sort ?? "-date",
+    };
+    const queryParams = Object.entries(filter)
+      .map(([key, value]) => `${key}=${value}`)
+      .join("&");
+
+    const endpoint = `${import.meta.env.E_D_APP_GET_ASSESSMENTS_ENDPOINT}?${queryParams}`;
+
+    const response = await this.dashboardFetch(endpoint);
 
     if (!response?.length) return [];
 
@@ -285,5 +298,45 @@ export class ApiService {
         },
       };
     });
+  }
+
+  async getUserDetails() {
+    let response = await this.dashboardFetch(
+      import.meta.env.E_D_APP_GET_USER_DETAILS_ENDPOINT,
+    );
+
+    response = response || {};
+    response.userId =
+      response.id || response.userId || response.teacherId || "";
+    response.email = response.email || response.userEmail || "";
+
+    return response;
+  }
+
+  async getReportByAssessmentId(
+    assessmentId: string,
+  ): Promise<Omit<Report, "students">> {
+    const response = await this.dashboardFetch(
+      replaceVarsInstr(import.meta.env.E_D_APP_GET_REPORT_BY_ASSESSMENT_ID, {
+        assessmentId,
+      }),
+    );
+
+    return response;
+  }
+
+  async getReportStudentsByAssessmentId(
+    assessmentId: string,
+  ): Promise<Report["students"]> {
+    const response = await this.dashboardFetch(
+      replaceVarsInstr(
+        import.meta.env.E_D_APP_GET_REPORT_STUDENTS_BY_ASSESSMENT_ID,
+        {
+          assessmentId,
+        },
+      ),
+    );
+
+    return response;
   }
 }

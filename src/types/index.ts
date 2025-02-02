@@ -66,6 +66,7 @@ export interface CreateAsessmentRequest {
   assessmentName: string;
   classId: string;
   subjectId: string;
+  boardId: string;
   chapters: {
     chapterId: string;
     questions: Question[];
@@ -90,4 +91,26 @@ export interface Chapters {
   schoolId: string;
   boardId: string;
   chapters: Chapter[];
+}
+
+export interface AssessmentFilter {
+  board: string;
+  class: string;
+  section: string;
+  subject: string;
+  sort?: string;
+}
+
+export interface Report {
+  averageScore: number;
+  averageTime: number;
+  averageStudentsAttempted: number;
+  totalStudents: number;
+  students?: {
+    studentName: string;
+    percentage: number;
+    attempted: number;
+    score: number;
+    totalQuestions: number;
+  }[];
 }

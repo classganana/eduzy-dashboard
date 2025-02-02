@@ -1,36 +1,27 @@
 import { Button, Spinner } from "@heroui/react";
-import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { FillOutBroIcon } from "@/components/icons";
 import PlaceholderCard from "@/components/placeholder-card";
 import TestCardsList from "@/components/test-cards-list";
 import { Constants } from "@/lib/utils/constants";
-import { useAppDispatch, useAppSelector } from "@/lib/utils/hooks";
+import { useAppSelector } from "@/lib/utils/hooks";
 import { AppTexts } from "@/lib/utils/texts";
-import { fetchAssessments } from "@/store/slices/assessmentSlice";
 
 type Props = {};
 
 const Assessments = (_props: Props) => {
   const assessmentInfo = useAppSelector((state) => state.assessments);
-  const dispatch = useAppDispatch();
   const navigate = useNavigate();
-
-  useEffect(() => {
-    /* Initialize the chapters */
-    dispatch(fetchAssessments());
-  }, []);
 
   const handleCreateTestClick = () => {
     navigate(Constants.routes.createTest);
   };
 
-  console.log(assessmentInfo);
   const hasAssessments = assessmentInfo.data?.length !== 0;
 
   return (
-    <div className="flex-grow flex flex-col gap-4 px-3">
+    <div className="grow flex flex-col gap-4 px-1">
       {hasAssessments && (
         <div className="flex justify-between">
           <h3 className="text-xl font-bold">{AppTexts.testsHeading}</h3>
@@ -39,7 +30,7 @@ const Assessments = (_props: Props) => {
           </Button>
         </div>
       )}
-      <div className="flex-grow p-1">
+      <div className="grow">
         {assessmentInfo.loading && (
           <Spinner
             className="w-full m-2 mt-auto mb-auto"

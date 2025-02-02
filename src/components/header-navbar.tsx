@@ -32,10 +32,10 @@ export default function HeaderNavBar() {
       label: AppTexts.navbarTestsTexts,
       href: Constants.routes.tests,
     },
-    {
-      label: AppTexts.navbarReportsText,
-      href: Constants.routes.reports,
-    },
+    // {
+    //   label: AppTexts.navbarReportsText,
+    //   href: Constants.routes.reports,
+    // },
   ];
 
   return (
@@ -58,7 +58,7 @@ export default function HeaderNavBar() {
           "text-md",
         ],
       }}
-      height={"3.7rem"}
+      height={"3.5rem"}
       maxWidth="full"
       onMenuOpenChange={setIsMenuOpen}
     >

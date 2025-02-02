@@ -12,16 +12,7 @@ const TestCardsList = (_props: Props) => {
     <div className="flex flex-col gap-4">
       {assessmentInfo.data.map((assessment: Assessment) => {
         return (
-          <TestCard
-            key={assessment.assessmentId}
-            assessment={assessment.assessmentName}
-            assessmentDate={assessment.startDate}
-            attemptedPercentage={99}
-            avgScore={90.01}
-            notUnderstoodTopics="No"
-            status={assessment.status}
-            onViewReport={() => {}}
-          />
+          <TestCard key={assessment.assessmentId} assessment={assessment} />
         );
       })}
     </div>

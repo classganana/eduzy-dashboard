@@ -62,4 +62,9 @@ export const AppTexts = {
   avgScore: "Avg Score",
   attempted: "Attempted",
   status: "Assessment Sent",
+
+  assessmentStatuses: {
+    sent: "Assessment Sent",
+    completed: "Assessment Completed",
+  },
 };

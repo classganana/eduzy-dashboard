@@ -26,6 +26,9 @@ const PreviewChapterQuestionsModalbutton = ({
   const loadingQuestions = useAppSelector(
     (state) => state.chapters.loadingQuestions,
   );
+  const assessmentFilter = useAppSelector(
+    (state) => state.assessments.currentFilter,
+  );
   const dispatch = useAppDispatch();
   const [isModalOpened, setIsModalOpened] = useState(false);
 
@@ -43,9 +46,9 @@ const PreviewChapterQuestionsModalbutton = ({
     /* Initialize the chapters */
     dispatch(
       fetchQuestions({
-        classId: "6",
-        subjectId: "Mathematics",
-        boardId: "CBSE",
+        classId: assessmentFilter.class,
+        subjectId: assessmentFilter.subject,
+        boardId: assessmentFilter.board,
         chapterIds: chapterIds,
       }),
     );

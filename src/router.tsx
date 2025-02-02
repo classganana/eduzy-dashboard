@@ -8,7 +8,7 @@ import CreateTest from "./pages/create-test";
 import ErrorPage from "./pages/error";
 import Home from "./pages/home";
 import LoginPage from "./pages/login";
-import Reports from "./pages/reports";
+import ReportPage from "./pages/report";
 
 export const applicationRouter = createBrowserRouter([
   {
@@ -39,8 +39,8 @@ export const applicationRouter = createBrowserRouter([
             children: [],
           },
           {
-            path: Constants.routes.reports,
-            element: <Reports />,
+            path: Constants.routes.report,
+            element: <ReportPage />,
           },
           {
             path: Constants.routes.createTest,

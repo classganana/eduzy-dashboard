@@ -2388,3 +2388,53 @@ export const InfoIcon: React.FC<IconSvgProps> = ({
     </svg>
   );
 };
+
+export const RightArrowWithCircle: React.FC<IconSvgProps> = ({
+  size = "1.3rem",
+  width = size,
+  height = size,
+  className = "",
+}) => {
+  return (
+    <svg
+      className={"lucide lucide-circle-arrow-right " + className}
+      fill="none"
+      height={height}
+      stroke="currentColor"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth="2"
+      viewBox="0 0 24 24"
+      width={width}
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <circle cx="12" cy="12" r="10" />
+      <path d="M8 12h8" />
+      <path d="m12 16 4-4-4-4" />
+    </svg>
+  );
+};
+
+export const CheckCircle: React.FC<IconSvgProps> = ({
+  size = "1.3rem",
+  width = size,
+  height = size,
+  className = "",
+}) => {
+  return (
+    <svg
+      className={"lucide lucide-circle-check" + className}
+      fill="none"
+      height={height}
+      stroke="currentColor"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth="2"
+      viewBox="0 0 24 24"
+      width={width}
+    >
+      <circle cx="12" cy="12" r="10" />
+      <path d="m9 12 2 2 4-4" />
+    </svg>
+  );
+};
