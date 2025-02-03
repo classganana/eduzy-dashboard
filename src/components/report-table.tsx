@@ -7,7 +7,7 @@ import {
   TableRow,
 } from "@heroui/react";
 
-import arrow from "../../assets/arrow.png"; // Correct import from your assets folder
+import { LeftArrow } from "./icons";
 
 // Interface for columns
 interface Column {
@@ -21,8 +21,8 @@ interface RowItem {
   key: string;
   student: string;
   attemptedQuestions: number;
-  totalScore: string;
-  scorePercentage: string;
+  totalScore: number;
+  scorePercentage: number;
 }
 
 // Interface for the props in ReportTable
@@ -47,11 +47,7 @@ const ReportTable: React.FC<ReportTableProps> = ({ columns, items }) => {
           >
             {column.label}
             {column.sortable && (
-              <img
-                alt="Sort"
-                className="inline-block ml-2 w-4 h-4"
-                src={arrow}
-              />
+              <LeftArrow className="inline-block ml-2 w-4 h-4" />
             )}
           </TableColumn>
         ))}

@@ -67,4 +67,15 @@ export const AppTexts = {
     sent: "Assessment Sent",
     completed: "Assessment Completed",
   },
+
+  reportNotFound: "Report not found or invalid",
+  reportAvgScoreText: "Average Score",
+  reportAttemptedText: "Attempted",
+  reportAverageCompletionTime: "Avg Completion Time",
+  reportAvgCompletionTimeUnit: "mins",
+
+  reportColStudent: "Student",
+  reportColAttemptedQues: "Attempted Questions",
+  reportColTotalScore: "Total Score",
+  reportColScorePercentage: "Score %",
 };

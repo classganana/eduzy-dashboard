@@ -1,11 +1,13 @@
 import { Button, Card, CardBody, Chip } from "@heroui/react";
 import clsx from "clsx";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import { CheckCircle, RightArrowWithCircle } from "./icons";
 
-import { Assessment } from "@/types";
+import { Constants } from "@/lib/utils/constants";
 import { AppTexts } from "@/lib/utils/texts";
+import { Assessment } from "@/types";
 
 interface AssessmentProps {
   assessment: Assessment;
@@ -26,6 +28,7 @@ const formatDate = (dateString?: string): string => {
 
 function TestCard({ assessment }: Readonly<AssessmentProps>) {
   const [isAssessmentCompleted, setIsAssessmentCompleted] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     setIsAssessmentCompleted(
@@ -71,7 +74,16 @@ function TestCard({ assessment }: Readonly<AssessmentProps>) {
               color="primary"
               size="sm"
               variant="bordered"
-              onPress={() => {}}
+              onPress={() => {
+                navigate(
+                  Constants.routes.report
+                    .replace(":assessmentId", assessment.assessmentId)
+                    .replace(
+                      ":assessmentName",
+                      encodeURIComponent(assessment.assessmentName),
+                    ),
+                );
+              }}
             >
               {AppTexts.viewReport}
             </Button>

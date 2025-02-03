@@ -1,23 +1,60 @@
-import { Button } from "@heroui/react";
-import { useNavigate } from "react-router-dom";
+import { Button, Card, CardBody } from "@heroui/react";
+import { useNavigate, useParams } from "react-router-dom";
+import { useEffect } from "react";
 
 import AppLoader from "@/components/app-loader";
-import ChapterCard from "@/components/chapterCard";
-import { InfoIcon, LeftArrow, NoDataIcon } from "@/components/icons";
+import { LeftArrow, NoDataIcon } from "@/components/icons";
 import PlaceholderCard from "@/components/placeholder-card";
-import PreviewChapterQuestionsModalbutton from "@/components/preview-chapter-questions-modal-button";
-import SendTestModalButton from "@/components/send-test-modal-button";
+import ReportTable from "@/components/report-table";
+import { useAppDispatch, useAppSelector } from "@/lib/utils/hooks";
 import { AppTexts } from "@/lib/utils/texts";
+import {
+  fetchAssessmentReport,
+  fetchAssessmentReportStudents,
+  selectReportDetails,
+  selectReportError,
+  selectReportingLoading,
+} from "@/store/slices/reportSlice";
 
 type Props = {};
 
 const ReportPage = (_props: Props) => {
   const navigate = useNavigate();
+  const params = useParams();
+
+  console.log(params);
+  const reportLoading = useAppSelector(selectReportingLoading);
+  const reportDetails = useAppSelector((state) =>
+    selectReportDetails(state, params.assessmentId ?? ""),
+  );
+  const reportError = useAppSelector(selectReportError);
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    params.assessmentId && dispatch(fetchAssessmentReport(params.assessmentId));
+    params.assessmentId &&
+      dispatch(fetchAssessmentReportStudents(params.assessmentId));
+  }, [params]);
+
+  if (
+    !reportLoading &&
+    (!params.assessmentId ||
+      !params.assessmentName ||
+      Boolean(reportError?.length))
+  ) {
+    return (
+      <PlaceholderCard
+        description={""}
+        icon={<NoDataIcon size={"20em"} />}
+        title={AppTexts.reportNotFound}
+      />
+    );
+  }
 
   return (
     <div className="grow flex flex-col gap-4 px-3">
       <div className="flex flex-wrap gap-4 items-center sm:justify-between">
-        <div className="flex justify-self-start">
+        <div className="flex justify-self-start items-center">
           <Button
             className="mx-2"
             isIconOnly={true}
@@ -28,49 +65,78 @@ const ReportPage = (_props: Props) => {
             <LeftArrow />
           </Button>
           <div>
-            <h3 className="text-xl font-bold">{AppTexts.reportPageHeading}</h3>
-            <p className="flex font-light text-xs items-center gap-1">
-              <InfoIcon className="w-10 h-10 sm:w-5 sm:h-5" />{" "}
-              {AppTexts.reportPageInfoMessage}
-            </p>
+            <h3 className="text-xl font-bold">{params.assessmentName}</h3>
           </div>
-        </div>
-        <div className="flex gap-2 items-center grow justify-end">
-          <PreviewChapterQuestionsModalbutton
-            chapterIds={selectedChapters.map((chapter) => chapter.id)}
-            disabled={selectedChapters.length === 0}
-          />
-          <SendTestModalButton
-            disabled={selectedChapters.length === 0}
-            submitCallback={reportPageHandler}
-          />
         </div>
       </div>
-      <AppLoader loading={chaptersInfo.loading || isCreatingTest} />
+      <AppLoader loading={reportLoading} />
 
-      {!chaptersInfo.loading && !isCreatingTest && !hasChapters && (
-        <PlaceholderCard
-          description={AppTexts.noChaptersCardDescription}
-          icon={<NoDataIcon size={"20em"} />}
-          title={AppTexts.noChaptersCardTitle}
-        />
-      )}
-
-      {hasChapters && !chaptersInfo.loading && !isCreatingTest && (
+      {reportDetails && !reportLoading && (
         <div className="w-full flex flex-col gap-4">
-          <h4 className="px-6 font-bold">{AppTexts.selectChaptersHeading}</h4>
           <div className="flex flex-wrap gap-4 justify-center">
-            {chaptersInfo.data?.chapters.map((chapter) => {
-              return (
-                <ChapterCard
-                  key={chapter.id}
-                  chapter={chapter}
-                  onSelectionChange={handleChapterCardSelection}
-                />
-              );
-            })}
+            <Card className="flex-1 min-h-[100px] flex flex-col justify-between">
+              <CardBody>
+                <p className="text-sm"> {AppTexts.reportAvgScoreText}</p>
+                <div className="h-full text-3xl text-primary flex px-1 items-end">
+                  {reportDetails.averageScore}%
+                </div>
+              </CardBody>
+            </Card>
+            <Card className="flex-1 min-w-[100px]">
+              <CardBody>
+                <p className="text-sm">{AppTexts.reportAttemptedText}</p>
+                <div className="h-full text-3xl text-primary flex px-1 items-end">
+                  {reportDetails.averageStudentsAttempted}%
+                </div>
+              </CardBody>
+            </Card>
+            <Card className="flex-1 min-w-[100px]">
+              <CardBody className="flex flex-col">
+                <p className="text-sm">
+                  {AppTexts.reportAverageCompletionTime}
+                </p>
+                <div className="h-full text-3xl text-primary flex px-1 items-end">
+                  {reportDetails.averageTime}
+                  <span>&nbsp;{AppTexts.reportAvgCompletionTimeUnit}</span>
+                </div>
+              </CardBody>
+            </Card>
           </div>
         </div>
+      )}
+
+      {reportDetails && !reportLoading && (
+        <ReportTable
+          columns={[
+            {
+              key: AppTexts.reportColStudent,
+              label: AppTexts.reportColStudent,
+            },
+            {
+              key: AppTexts.reportColAttemptedQues,
+              label: AppTexts.reportColAttemptedQues,
+            },
+            {
+              key: AppTexts.reportColTotalScore,
+              label: AppTexts.reportColTotalScore,
+            },
+            {
+              key: AppTexts.reportColScorePercentage,
+              label: AppTexts.reportColScorePercentage,
+            },
+          ]}
+          items={
+            reportDetails.students?.map((student, index) => {
+              return {
+                attemptedQuestions: student.attempted,
+                scorePercentage: student.percentage,
+                key: student.studentName + index + student.percentage,
+                student: student.studentName,
+                totalScore: student.score,
+              };
+            }) ?? []
+          }
+        />
       )}
     </div>
   );

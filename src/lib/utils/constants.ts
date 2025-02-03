@@ -4,7 +4,7 @@ export class Constants {
   public static readonly routes = {
     tests: "/tests",
     createTest: "/tests/create-test",
-    report: "/report",
+    report: "/test/:assessmentId/report/:assessmentName",
     home: "/home",
     login: "/login",
   };
