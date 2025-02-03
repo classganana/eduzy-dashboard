@@ -10,6 +10,8 @@ export const AppTexts = {
   incorrectQuestion: "Incorrect",
   previewQuestionsHeading: "Questions Preview",
 
+  goToTestsButton: "Explore/Create Tests",
+
   goodMorningText: "Good Morning",
   goodAfternoonText: "Good Afternoon",
   goodEveningText: "Good Evening",

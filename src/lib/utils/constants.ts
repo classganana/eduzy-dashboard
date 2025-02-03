@@ -12,4 +12,6 @@ export class Constants {
   public static readonly LocalStorageAccessTokenKey = "E_D_ACCESS_TOKEN";
 
   public static readonly assessmentStatusIcons = {};
+
+  public static readonly sidebarNeededPages = [Constants.routes.tests];
 }
