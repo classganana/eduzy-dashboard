@@ -5,6 +5,8 @@ import {
   PayloadAction,
 } from "@reduxjs/toolkit";
 
+import { RootState } from "..";
+
 import { ApiService } from "@/lib/services/api-service";
 
 interface UserInfo {
@@ -92,5 +94,6 @@ export const fetchUserDetails = createAsyncThunk(
 );
 
 export const { setUserInfo, resetUserInfo } = userSlice.actions;
+export const selectUserDetails = (state: RootState) => state.user.data;
 
 export default userSlice.reducer;

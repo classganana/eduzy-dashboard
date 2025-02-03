@@ -20,12 +20,15 @@ import { DefaultUserIcon, EduzyLogoWithTitle } from "./icons";
 
 import { removeTokenFromLocalStorage } from "@/lib/utils";
 import { Constants } from "@/lib/utils/constants";
+import { useAppSelector } from "@/lib/utils/hooks";
 import { AppTexts } from "@/lib/utils/texts";
+import { selectUserDetails } from "@/store/slices/userSlice";
 
 export default function HeaderNavBar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
+  const userDetails = useAppSelector(selectUserDetails);
 
   const menuItems = [
     {
@@ -128,10 +131,10 @@ export default function HeaderNavBar() {
           <DropdownMenu aria-label="Profile Actions" variant="flat">
             <DropdownItem key="profile" className="h-14 gap-2">
               <p className="font-semibold">Signed in as</p>
-              <p className="font-semibold">zoey@example.com</p>
+              <p className="font-semibold">{userDetails.email}</p>
             </DropdownItem>
-            <DropdownItem key="settings">My Settings</DropdownItem>
-            <DropdownItem key="system">System</DropdownItem>
+            {/* <DropdownItem key="settings">My Settings</DropdownItem>
+            <DropdownItem key="system">System</DropdownItem> */}
             <DropdownItem
               key="logout"
               color="danger"
