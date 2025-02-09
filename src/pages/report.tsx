@@ -1,6 +1,6 @@
 import { Button, Card, CardBody } from "@heroui/react";
-import { useNavigate, useParams } from "react-router-dom";
 import { useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 
 import AppLoader from "@/components/app-loader";
 import { LeftArrow, NoDataIcon } from "@/components/icons";
@@ -31,9 +31,11 @@ const ReportPage = (_props: Props) => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    params.assessmentId && dispatch(fetchAssessmentReport(params.assessmentId));
     params.assessmentId &&
-      dispatch(fetchAssessmentReportStudents(params.assessmentId));
+      dispatch(fetchAssessmentReport(params.assessmentId)).then(() => {
+        params.assessmentId &&
+          dispatch(fetchAssessmentReportStudents(params.assessmentId));
+      });
   }, [params]);
 
   if (
@@ -109,26 +111,26 @@ const ReportPage = (_props: Props) => {
         <ReportTable
           columns={[
             {
-              key: AppTexts.reportColStudent,
+              key: "student",
               label: AppTexts.reportColStudent,
             },
             {
-              key: AppTexts.reportColAttemptedQues,
+              key: "attemptedQuestionsByTotal",
               label: AppTexts.reportColAttemptedQues,
             },
             {
-              key: AppTexts.reportColTotalScore,
+              key: "totalScore",
               label: AppTexts.reportColTotalScore,
             },
             {
-              key: AppTexts.reportColScorePercentage,
+              key: "scorePercentage",
               label: AppTexts.reportColScorePercentage,
             },
           ]}
           items={
             reportDetails.students?.map((student, index) => {
               return {
-                attemptedQuestions: student.attempted,
+                attemptedQuestionsByTotal: `${student.attempted}/${student.totalQuestions}`,
                 scorePercentage: student.percentage,
                 key: student.studentName + index + student.percentage,
                 student: student.studentName,

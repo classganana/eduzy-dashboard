@@ -80,4 +80,6 @@ export const AppTexts = {
   reportColAttemptedQues: "Attempted Questions",
   reportColTotalScore: "Total Score",
   reportColScorePercentage: "Score %",
+  emptyTable: "No rows to display.",
+  reportTableTitle: "Student Report Table",
 };
