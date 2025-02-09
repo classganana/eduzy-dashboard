@@ -113,4 +113,8 @@ export interface Report {
     score: number;
     totalQuestions: number;
   }[];
+  wronglyAnswered?: {
+    question: string;
+    count: number;
+  }[];
 }

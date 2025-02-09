@@ -339,4 +339,20 @@ export class ApiService {
 
     return response;
   }
+
+  async getReportWronglyAnsweredByAssessmentId(
+    assessmentId: string,
+  ): Promise<Report["wronglyAnswered"]> {
+    const response = await this.dashboardFetch(
+      replaceVarsInstr(
+        import.meta.env
+          .E_D_APP_GET_REPORT_WRONGLY_ANSWERED_QUES_BY_ASSESSMENT_ID,
+        {
+          assessmentId,
+        },
+      ),
+    );
+
+    return response;
+  }
 }

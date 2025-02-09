@@ -82,4 +82,7 @@ export const AppTexts = {
   reportColScorePercentage: "Score %",
   emptyTable: "No rows to display.",
   reportTableTitle: "Student Report Table",
+  studentScoreTabTitle: "Student Score",
+  wronglyAnsweredQuestions: "Questions answered wrong Tab",
+  wronglyAnsweredCountPostfix: "Students",
 };

@@ -1,5 +1,5 @@
-import { Button, Card, CardBody } from "@heroui/react";
-import { useEffect } from "react";
+import { Button, Card, CardBody, Tab, Tabs } from "@heroui/react";
+import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 import AppLoader from "@/components/app-loader";
@@ -11,9 +11,12 @@ import { AppTexts } from "@/lib/utils/texts";
 import {
   fetchAssessmentReport,
   fetchAssessmentReportStudents,
+  fetchAssessmentReportWronglyAnsweredQuestions,
   selectReportDetails,
   selectReportError,
   selectReportingLoading,
+  selectReportStudentsLoading,
+  selectReportWronglyAnsweredLoading,
 } from "@/store/slices/reportSlice";
 
 type Props = {};
@@ -24,19 +27,44 @@ const ReportPage = (_props: Props) => {
 
   console.log(params);
   const reportLoading = useAppSelector(selectReportingLoading);
+  const reportStudentsLoading = useAppSelector(selectReportStudentsLoading);
+  const reportWronglyAnsweredLoading = useAppSelector(
+    selectReportWronglyAnsweredLoading,
+  );
   const reportDetails = useAppSelector((state) =>
     selectReportDetails(state, params.assessmentId ?? ""),
   );
   const reportError = useAppSelector(selectReportError);
+  const [selectedReportTab, setSelectedReportTab] = useState<string | number>(
+    "studentScoreTab",
+  );
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    params.assessmentId &&
-      dispatch(fetchAssessmentReport(params.assessmentId)).then(() => {
-        params.assessmentId &&
-          dispatch(fetchAssessmentReportStudents(params.assessmentId));
-      });
+    const fetchData = async () => {
+      if (params.assessmentId) {
+        await dispatch(fetchAssessmentReport(params.assessmentId));
+      }
+    };
+
+    fetchData();
   }, [params]);
+
+  useEffect(() => {
+    const fetchTabData = () => {
+      if (selectedReportTab === "studentScoreTab") {
+        dispatch(fetchAssessmentReportStudents(params.assessmentId ?? ""));
+      } else if (selectedReportTab == "wronglyAnsweredTab") {
+        dispatch(
+          fetchAssessmentReportWronglyAnsweredQuestions(
+            params.assessmentId ?? "",
+          ),
+        );
+      }
+    };
+
+    !reportLoading && fetchTabData();
+  }, [reportLoading, selectedReportTab]);
 
   if (
     !reportLoading &&
@@ -107,39 +135,84 @@ const ReportPage = (_props: Props) => {
         </div>
       )}
 
-      {reportDetails && !reportLoading && (
-        <ReportTable
-          columns={[
-            {
-              key: "student",
-              label: AppTexts.reportColStudent,
-            },
-            {
-              key: "attemptedQuestionsByTotal",
-              label: AppTexts.reportColAttemptedQues,
-            },
-            {
-              key: "totalScore",
-              label: AppTexts.reportColTotalScore,
-            },
-            {
-              key: "scorePercentage",
-              label: AppTexts.reportColScorePercentage,
-            },
-          ]}
-          items={
-            reportDetails.students?.map((student, index) => {
-              return {
-                attemptedQuestionsByTotal: `${student.attempted}/${student.totalQuestions}`,
-                scorePercentage: student.percentage,
-                key: student.studentName + index + student.percentage,
-                student: student.studentName,
-                totalScore: student.score,
-              };
-            }) ?? []
+      <div className="flex w-full flex-col">
+        <Tabs
+          aria-label="Options"
+          selectedKey={selectedReportTab}
+          onSelectionChange={(key: string | number) =>
+            setSelectedReportTab(key)
           }
-        />
-      )}
+        >
+          <Tab key="studentScoreTab" title={AppTexts.studentScoreTabTitle}>
+            {reportStudentsLoading && (
+              <AppLoader loading={reportStudentsLoading} />
+            )}
+            {reportDetails && !reportLoading && !reportStudentsLoading && (
+              <ReportTable
+                columns={[
+                  {
+                    key: "student",
+                    label: AppTexts.reportColStudent,
+                  },
+                  {
+                    key: "attemptedQuestionsByTotal",
+                    label: AppTexts.reportColAttemptedQues,
+                  },
+                  {
+                    key: "totalScore",
+                    label: AppTexts.reportColTotalScore,
+                  },
+                  {
+                    key: "scorePercentage",
+                    label: AppTexts.reportColScorePercentage,
+                  },
+                ]}
+                items={
+                  reportDetails.students?.map((student, index) => {
+                    return {
+                      attemptedQuestionsByTotal: `${student.attempted}/${student.totalQuestions}`,
+                      scorePercentage: student.percentage,
+                      key: student.studentName + index + student.percentage,
+                      student: student.studentName,
+                      totalScore: student.score,
+                    };
+                  }) ?? []
+                }
+              />
+            )}
+          </Tab>
+          <Tab
+            key="wronglyAnsweredTab"
+            title={AppTexts.wronglyAnsweredQuestions}
+          >
+            <Card>
+              <CardBody>
+                {reportWronglyAnsweredLoading && (
+                  <AppLoader loading={reportWronglyAnsweredLoading} />
+                )}
+                {reportDetails &&
+                  !reportLoading &&
+                  !reportWronglyAnsweredLoading && (
+                    <div className="m-2">
+                      {reportDetails.wronglyAnswered?.map((item) => (
+                        <div
+                          key={item.question + item.count}
+                          className="flex gap-5 justify-between p-4"
+                        >
+                          <div>{item.question}</div>
+                          <div>
+                            {item.count}&nbsp;
+                            {AppTexts.wronglyAnsweredCountPostfix}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+              </CardBody>
+            </Card>
+          </Tab>
+        </Tabs>
+      </div>
     </div>
   );
 };

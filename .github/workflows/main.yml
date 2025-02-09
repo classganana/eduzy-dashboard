@@ -29,7 +29,7 @@ jobs:
           E_D_APP_GET_USER_DETAILS_ENDPOINT: ${{ secrets.E_D_APP_GET_USER_DETAILS_ENDPOINT }}
           E_D_APP_GET_REPORT_BY_ASSESSMENT_ID: ${{ secrets.E_D_APP_GET_REPORT_BY_ASSESSMENT_ID }}
           E_D_APP_GET_REPORT_STUDENTS_BY_ASSESSMENT_ID: ${{ secrets.E_D_APP_GET_REPORT_STUDENTS_BY_ASSESSMENT_ID }}
-          
+          E_D_APP_GET_REPORT_WRONGLY_ANSWERED_QUES_BY_ASSESSMENT_ID: ${{ secrets.E_D_APP_GET_REPORT_WRONGLY_ANSWERED_QUES_BY_ASSESSMENT_ID }}
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
