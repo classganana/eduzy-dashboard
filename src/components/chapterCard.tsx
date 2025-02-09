@@ -54,8 +54,8 @@ const ChapterCard = ({
           aria-label={chapter.name || chapter.id}
           className="flex flex-row-reverse items-start w- max-w-full"
           classNames={{
-            base: "mr-2",
-            label: "w-full",
+            base: "mr-3 mt-2",
+            label: "w-full mt-[-15px]",
           }}
           isSelected={isSelected}
           onValueChange={handleCheckboxChange}
