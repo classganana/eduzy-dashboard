@@ -18,7 +18,7 @@ export const AppTexts = {
   goodNightText: "Good Night",
   dashboardWelcomeText: "Welcome to the Eduzy Dashboard",
 
-  loadingText: "Just a sec while we gather everything...",
+  loadingText: "Loading...",
 
   /* Assessments */
   testsHeading: "Tests",

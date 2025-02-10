@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 import { RootState } from "..";
 
@@ -43,15 +43,17 @@ export const fetchAssessmentReport = createAsyncThunk<
 
 export const fetchAssessmentReportStudents = createAsyncThunk<
   { reportStudents: Report["students"]; assessmentId: string },
-  string,
+  { assessmentId: string; filter?: { sort?: string } },
   { state: RootState }
 >(
   "reports/fetchAssessmentReportStudents",
-  async (assessmentId, { rejectWithValue }) => {
+  async ({ assessmentId, filter }, { rejectWithValue }) => {
     try {
       const apiService = ApiService.getInstance();
-      const reports =
-        await apiService.getReportStudentsByAssessmentId(assessmentId);
+      const reports = await apiService.getReportStudentsByAssessmentId(
+        assessmentId,
+        filter,
+      );
 
       return { reportStudents: reports || [], assessmentId };
     } catch (error: any) {
@@ -60,17 +62,17 @@ export const fetchAssessmentReportStudents = createAsyncThunk<
       return rejectWithValue(error.message);
     }
   },
-  {
-    condition: (assessmentId, { getState }) => {
-      const { report } = getState();
+  // {
+  //   condition: ({ assessmentId }, { getState }) => {
+  //     const { report } = getState();
 
-      if (report.data?.[assessmentId]?.students?.length) {
-        return false;
-      }
+  //     if (report.data?.[assessmentId]?.students?.length) {
+  //       return false;
+  //     }
 
-      return true;
-    },
-  },
+  //     return true;
+  //   },
+  // }
 );
 
 export const fetchAssessmentReportWronglyAnsweredQuestions = createAsyncThunk<
@@ -109,7 +111,7 @@ const reportSlice = createSlice({
   name: "reports",
   initialState,
   reducers: {
-    addReport(state, action: PayloadAction<Report>) {},
+    addReport() {},
     updateReport() {},
     removeReport() {},
   },

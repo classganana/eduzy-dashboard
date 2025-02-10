@@ -12,11 +12,11 @@ import {
 import clsx from "clsx";
 import React, { useEffect, useMemo } from "react";
 
-import { updateFilterAndFetch } from "@/store/slices/assessmentSlice";
 import { useAppDispatch, useAppSelector } from "@/lib/utils/hooks";
+import { updateFilterAndFetch } from "@/store/slices/assessmentSlice";
 
 export const ListboxWrapper = ({ children }: { children: React.ReactNode }) => (
-  <div className="w-full sm:max-w-[200px] max-w-[80%] border-r-small px-1 py-2 rounded-small border-default-200 dark:border-default-100">
+  <div className="w-full sm:w-[25%] sm:max-w-[250px] 2xl:max-w-[400px] border-r-small px-1 py-2 rounded-small border-default-200 dark:border-default-100">
     {children}
   </div>
 );

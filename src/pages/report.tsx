@@ -25,7 +25,6 @@ const ReportPage = (_props: Props) => {
   const navigate = useNavigate();
   const params = useParams();
 
-  console.log(params);
   const reportLoading = useAppSelector(selectReportingLoading);
   const reportStudentsLoading = useAppSelector(selectReportStudentsLoading);
   const reportWronglyAnsweredLoading = useAppSelector(
@@ -40,6 +39,27 @@ const ReportPage = (_props: Props) => {
   );
   const dispatch = useAppDispatch();
 
+  const fetchTabData = (filter?: { sort?: string }) => {
+    if (selectedReportTab === "studentScoreTab") {
+      filter = {
+        sort: "-attempted",
+        ...(filter ?? {}),
+      };
+      dispatch(
+        fetchAssessmentReportStudents({
+          assessmentId: params.assessmentId ?? "",
+          filter,
+        }),
+      );
+    } else if (selectedReportTab == "wronglyAnsweredTab") {
+      dispatch(
+        fetchAssessmentReportWronglyAnsweredQuestions(
+          params.assessmentId ?? "",
+        ),
+      );
+    }
+  };
+
   useEffect(() => {
     const fetchData = async () => {
       if (params.assessmentId) {
@@ -51,18 +71,6 @@ const ReportPage = (_props: Props) => {
   }, [params]);
 
   useEffect(() => {
-    const fetchTabData = () => {
-      if (selectedReportTab === "studentScoreTab") {
-        dispatch(fetchAssessmentReportStudents(params.assessmentId ?? ""));
-      } else if (selectedReportTab == "wronglyAnsweredTab") {
-        dispatch(
-          fetchAssessmentReportWronglyAnsweredQuestions(
-            params.assessmentId ?? "",
-          ),
-        );
-      }
-    };
-
     !reportLoading && fetchTabData();
   }, [reportLoading, selectedReportTab]);
 

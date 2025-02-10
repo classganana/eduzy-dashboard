@@ -327,8 +327,9 @@ export class ApiService {
 
   async getReportStudentsByAssessmentId(
     assessmentId: string,
+    filter?: { sort?: string },
   ): Promise<Report["students"]> {
-    const response = await this.dashboardFetch(
+    const url = new URL(
       replaceVarsInstr(
         import.meta.env.E_D_APP_GET_REPORT_STUDENTS_BY_ASSESSMENT_ID,
         {
@@ -336,6 +337,11 @@ export class ApiService {
         },
       ),
     );
+
+    if (filter?.sort) {
+      url.searchParams.set("sort", filter.sort);
+    }
+    const response = await this.dashboardFetch(url);
 
     return response;
   }
