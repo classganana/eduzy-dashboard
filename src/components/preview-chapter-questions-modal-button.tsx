@@ -22,7 +22,6 @@ const PreviewChapterQuestionsModalbutton = ({
   const filteredChapters = useAppSelector((state) =>
     getChaptersByIds(state, chapterIds),
   );
-  const loadingChapters = useAppSelector((state) => state.chapters.loading);
   const loadingQuestions = useAppSelector(
     (state) => state.chapters.loadingQuestions,
   );
@@ -56,7 +55,7 @@ const PreviewChapterQuestionsModalbutton = ({
 
   return (
     <div>
-      <AppLoader loading={loadingChapters || loadingQuestions} />
+      <AppLoader loading={loadingQuestions} />
       <AppModal
         body={
           <div className="flex flex-col gap-3 justify-center">
