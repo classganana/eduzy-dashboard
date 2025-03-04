@@ -103,7 +103,16 @@ function TestCard({ assessment }: Readonly<AssessmentProps>) {
           color="primary"
           size="sm"
           variant="bordered"
-          onPress={() => {}}
+          onPress={() => {
+            navigate(
+              Constants.routes.report
+                .replace(":assessmentId", assessment.assessmentId)
+                .replace(
+                  ":assessmentName",
+                  encodeURIComponent(assessment.assessmentName),
+                ),
+            );
+          }}
         >
           {AppTexts.viewReport}
         </Button>
